@@ -1,0 +1,32 @@
+Elabore um programa	para gerir os Empréstimos de Livros	de uma Biblioteca.
+
+Um Livro é caracterizado pelo título e nome do autor.
+
+Um Leitor é	caracterizado pelo número de utente e nome.
+
+Uma	Requisição é caracterizada	pelo Leitor, Livro, Data de requisição e Data de devolução.
+
+A Data deve	ser	constituída	pelo dia, mês e	ano.
+
+
+O seu programa deve permitir as seguintes operações:
+
+    1.Listar livros	requisitados numa data pedida ao utilizador;
+
+    2.Listar os livros disponíveis;
+
+    3.Requisitar um Livro.
+
+
+
+Para realizar as operações indicadas, deve implementar,	no mínimo, os seguintes	métodos, nas classes adequadas,	seguindo as	boas práticas da programação orientada
+aos objetos:
+
+    •void listaRequisitados(Data d)
+
+    •void listaLivrosDisponíveis()
+
+    •Requisicao	requisitaLivro(Leitor l, Data dtReq, Data dtDev)
+
+
+O seu programa deve ter predefinidos dados que permitam testar as funcionalidades pedidas, incluindo pelo menos dois utilizadores e dois livros.
