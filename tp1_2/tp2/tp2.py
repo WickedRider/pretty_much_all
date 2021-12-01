@@ -11,7 +11,7 @@ RLE:
 
 '''
 # Perform Run–length encoding (RLE) data compression algorithm on string `str`
-def encode(s):
+def RLencode(s):
  
     encoding = "" # stores output string
  
@@ -108,29 +108,34 @@ def getAlpha(source):
 
 
 def main():
-    file2 = "dataset/random1.txt"
-    stri = input("Filename: ")
-    sure = readText(stri)
-    size1 = os.path.getsize(stri)
-    print("File char count: "+str(size1))
-    sure1 = encode(sure)
-    size2 = os.path.getsize(file2)
-    print("Char count after compression: "+str(size2)) 
+    filesIn = ["dataset/bible.txt", "dataset/finance.csv", "dataset/jquery-3.6.0.js", "dataset/random.txt"]
+    filesOut = ["dataset/bible1.txt", "dataset/finance1.csv", "dataset/jquery-3.6.0.1.js", "dataset/random1.txt"]
+    for i in range(len(filesIn)):
+        stri = filesIn[i]
+        fileOut = filesOut[i]
+        sure = readText(stri)
+        size1 = os.path.getsize(stri)
+        print(stri+":\n"+"File size: "+str(size1))
+    
+        sure1 = RLencode(sure)
     
 
-    
-    with open(file2, "w") as f:
-        f.write(sure1)
-    f.close()
-    sure1 = readText(file2)
-    a = size1 / size2
-    print("Compress ratio (bits at input / bits at output): "+str(a))
-    
-    sureNP = np.asarray(sure)
-    sure1NP = np.asarray(sure1)
-    alpha = getAlpha(sure)
-    print(entropia(sureNP, getAlpha(sure)))
-    print(entropia(sure1NP, getAlpha(sure1)))
+
+
+        with open(fileOut, "w") as f:
+            f.write(sure1)
+        f.close()
+        size2 = os.path.getsize(fileOut)
+        print(fileOut+":\n"+"File size after compression: "+str(size2)) 
+        
+        sure1 = readText(fileOut)
+        a = size1 / size2
+        print("Compress ratio (bits at input / bits at output): "+str(a))
+        
+        sureNP = np.asarray(sure)
+        sure1NP = np.asarray(sure1)
+        print("Entropia de "+stri+": "+str(entropia(sureNP, getAlpha(sure))))
+        print("Entropia de "+fileOut+": "+str(entropia(sure1NP, getAlpha(sure1)))+"\n")
     
 if __name__ == '__main__':
     main()
