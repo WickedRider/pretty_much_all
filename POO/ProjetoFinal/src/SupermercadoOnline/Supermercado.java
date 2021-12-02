@@ -20,7 +20,7 @@ import java.util.Scanner;
  * alternative to file creation (not first time) - 
  * login - 
  * make a purchase - 
- * store purchases - class is constructed, needed to be tested
+ * store purchases - class is constructed, needed to be tested, purchases need to be stored in object file
  */
 
 
@@ -82,6 +82,7 @@ public class Supermercado implements Serializable{
 
                             break;
                         default:
+                            exit = false;
                             break;
                     }
                 }
@@ -216,6 +217,7 @@ public class Supermercado implements Serializable{
             ooS.writeObject(prodMobilia);
             ooS.writeObject(prodLimpeza);
             ooS.writeObject(prodAlimentares);
+            ooS.writeObject(compras);
             ooS.close();
             FileInputStream fis = new FileInputStream(f);
             ObjectInputStream oiS = new ObjectInputStream(fis);
