@@ -14,7 +14,7 @@ public class Compras implements Serializable{
     @Override
     public String toString() {
         return "{" +
-            " cl='" + getCl() + "'" +
+            " cl='" + getCl().toString() + "'" +
             ", prod='" + getProd() + "'" +
             "}";
     }
