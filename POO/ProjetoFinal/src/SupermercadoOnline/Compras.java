@@ -6,9 +6,12 @@ import java.util.ArrayList;
 public class Compras implements Serializable{
     protected Cliente cl;
     ArrayList<Produtos> prod;
-    public Compras(){
+    public Compras(Cliente cl, ArrayList<Produtos> prod){
         cl = new Cliente();
         prod = new ArrayList<Produtos>();
+    }
+    public Compras(){
+        
     }
 
     @Override
@@ -23,7 +26,11 @@ public class Compras implements Serializable{
         return this.cl;
     }
 
-    public void setCl(String nome, String morada, String mail, long telefone, String data) {
+    public void setCl(Cliente cl) {
+        this.cl = cl;
+    }
+
+    public void setCl1(String nome, String morada, String mail, long telefone, String data) {
         cl.setNome(nome);
         cl.setMorada(morada);
         cl.setMail(mail);
