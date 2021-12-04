@@ -22,10 +22,10 @@ public class Produtos implements Serializable{
     @Override
     public String toString() {
         return "{" +
-            " identificador='" + getIdentificador() + "'" +
-            ", nomeProd='" + getNomeProd() + "'" +
-            ", precoUni='" + getPrecoUni() + "'" +
-            ", stock='" + getStock() + "'" +
+            " identificador = '" + getIdentificador() + "' " +
+            ", nomeProd = '" + getNomeProd() + "' " +
+            ", precoUni = '" + getPrecoUni() + "' " +
+            ", stock = '" + getStock() + "' " +
             ",";
     }
 

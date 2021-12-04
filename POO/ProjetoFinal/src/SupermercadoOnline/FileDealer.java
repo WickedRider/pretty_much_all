@@ -35,7 +35,7 @@ public class FileDealer implements Serializable {
 /** 
      * @param f
      */
-    public FileDealer lineParsing(File fTxt, File fObj, FileDealer f){
+    public FileDealer lineParsing(File fTxt, File fObj, FileDealer f, ArrayList<Compras> cmp){
         
         try{
             FileReader fr = new FileReader(fTxt);
@@ -48,12 +48,12 @@ public class FileDealer implements Serializable {
                 split = check.split("§");
                 //CLIENTES FREQUENTES
                 if(split[0].equals("FREQ") && (split.length == 6)){
-                    Cliente cl = new Cliente(split[1], split[2], split[3], Long.parseLong(split[4]), split[5]);
+                    Cliente cl = new Cliente(split[1], split[2], split[3], Long.parseLong(split[4]), split[5], cmp);
                     clienteFreq.add(cl);
                 }
                 //CLIENTES REGULARES
                 if(split[0].equals("REG") && (split.length == 6)){
-                    Cliente cl = new Cliente(split[1], split[2], split[3], Long.parseLong(split[4]), split[5]);
+                    Cliente cl = new Cliente(split[1], split[2], split[3], Long.parseLong(split[4]), split[5], cmp);
                     clienteReg.add(cl);
                 }
                 //PRODUTOS MOBILIARIOS

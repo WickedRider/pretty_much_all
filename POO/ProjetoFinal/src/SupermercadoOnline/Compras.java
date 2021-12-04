@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Compras implements Serializable{
-    protected Cliente cl;
+    protected double priceTot;
     ArrayList<Produtos> prod;
-    public Compras(Cliente cl, ArrayList<Produtos> prod){
-        cl = new Cliente();
+    
+    public Compras(ArrayList<Produtos> prod, double priceTot){
         prod = new ArrayList<Produtos>();
+        this.priceTot = priceTot;
     }
     public Compras(){
         
@@ -16,26 +17,20 @@ public class Compras implements Serializable{
 
     @Override
     public String toString() {
-        return "{" +
-            " cl='" + getCl().toString() + "'" +
-            ", prod='" + getProd() + "'" +
-            "}";
+        String string = "";
+        for (Produtos p : getProd()) {
+            string += p.toString();
+        }
+        return string;
     }
 
-    public Cliente getCl() {
-        return this.cl;
+
+    public double getPriceTot() {
+        return this.priceTot;
     }
 
-    public void setCl(Cliente cl) {
-        this.cl = cl;
-    }
-
-    public void setCl1(String nome, String morada, String mail, long telefone, String data) {
-        cl.setNome(nome);
-        cl.setMorada(morada);
-        cl.setMail(mail);
-        cl.setTelefone(telefone);
-        cl.setData(data);
+    public void setPriceTot(double priceTot) {
+        this.priceTot = priceTot;
     }
 
     public ArrayList<Produtos> getProd() {
@@ -45,5 +40,7 @@ public class Compras implements Serializable{
     public void setProd(ArrayList<Produtos> prod) {
         this.prod = prod;
     }
+   
 
+   
 }
