@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -15,7 +16,10 @@ import java.util.Scanner;
  * alternative to file creation (not first time) - checked
  * store purchases - checked
  * make a purchase - checked
- * promos - FOR DOMINGO
+ * delivery prices - checked
+ * promos:
+ *          take4pay3 - checked
+ *          pagueMenos - to be done, prob segunda
  */
 
 
@@ -28,13 +32,18 @@ public class Supermercado implements Serializable{
     ArrayList<Alimentares> prodAlimentares;
     ArrayList<Produtos> prods;
     FileDealer fd1;
-    
+    Random r;
+    Miscellaneous mcll;
+
+
     public Supermercado(){
         clienteFreq = new ArrayList<Cliente>();
         clienteReg = new ArrayList<Cliente>();
         prodMobilia = new ArrayList<Mobiliario>();
         prodLimpeza = new ArrayList<Limpeza>();
         prodAlimentares = new ArrayList<Alimentares>();
+        mcll = new Miscellaneous();
+        r = new Random();
     }
     
     
@@ -47,9 +56,12 @@ public class Supermercado implements Serializable{
     }
     
     private void start(){
-        ArrayList<Compras> compras;
+        ArrayList<Compras> compras = new ArrayList<Compras>();
         Compras compraAtual = new Compras();
         prods = new ArrayList<Produtos>();
+        
+        Boolean hPromo = r.nextBoolean();
+        System.out.println(hPromo);
 
         fd1 = new FileDealer();
         File fTxt = fd1.getFTxt();
@@ -62,10 +74,8 @@ public class Supermercado implements Serializable{
         try{
 
             if(fObj.createNewFile()){
-                compras = new ArrayList<Compras>();
-                compras.add(compraAtual);
-                fd1 = fd1.lineParsing(fTxt, fObj, fd1, compras);
-
+                fd1 = fd1.lineParsing(fTxt, fObj, fd1);
+                
             }else{
                 fd1 = fd1.fromObjFile(fObj, fd1);
             }
@@ -81,42 +91,52 @@ public class Supermercado implements Serializable{
             Cliente currentCl = login();
             while(currentCl.getNome() == null){
                 currentCl = login();
-
+            }
+            if(currentCl.getCmp() == null){
+                compras.add(null);
+                currentCl.setCmp(compras);
+                System.out.println("NULL");
             }
             compras = currentCl.getCmp();
             while(!exit){
                 System.out.println("\nEscolha uma das opcões para prosseguir:\n-1 -> Proceder a uma compra.\n-2 -> Verificar compras feitas.\nQualquer outro valor -> para sair.");
-                key = sc.nextInt();
+                key = mcll.getInt();
 
                 switch (key) {
                     case 1:
-                        makePurchase(key, compraAtual);
-                        currentCl.setCmp(compras);
-                        System.out.println(currentCl.toString());
+                        compraAtual = makePurchase(key, compraAtual, currentCl.isFreq(), hPromo);
                         compras.set(compras.size()-1, compraAtual);
+                        currentCl.setCmp(compras);
+                        System.out.println("\n" + compras + "\n");
                         break;
                     case 2:
-                        if(compras.get(0).getPriceTot() == 0){
-                            System.out.println("Nao existem compras registadas.");
-                            continue;
-                        }
+                        if(currentCl.getCmp().get(0) != null){
+                            if(currentCl.getCmp().get(0).getPriceTot() == 0){
+                                System.out.println("Nao existem compras registadas.");
+                                continue;
+                            }
 
-                        double price = 0;
-                        System.out.println("Compras efetudas por " + currentCl.getNome() + " :\n");
-                        
-                        compras.set(compras.size()-1, compraAtual);
-                        
-                        for (Compras c : compras) {
-                            price = (double)Math.round(c.getPriceTot()*100)/100;
-                            System.out.println("Preco Total = "+price+", Produtos: "+c.toString());
-                        } 
-                        
+                            double price = 0;
+                            System.out.println("Compras efetudas por " + currentCl.getNome() + " :\n");
+                            
+
+                            for (Compras c : currentCl.getCmp()) {
+                                price = (double)Math.round(c.getPriceTot()*100)/100;
+                                if(price != 0){
+                                    System.out.println("Preco Total = "+price+", Produtos: "+c.toString());
+                                }
+                            }
+                        } else {
+                            System.out.println("Nao existem compras registadas.");
+                        }
+                            
                         
 
                         break;
                     default:
-                        compras.add(compraAtual);
-                        fd1.writeToObjectFile(fObj, fd1);
+                        compras.set(compras.size()-1,compraAtual);
+                        currentCl.setCmp(compras);
+                        fd1.writeToObjectFile(fObj, fd1, currentCl);
                         exit = true;
 
                         break;
@@ -134,32 +154,49 @@ public class Supermercado implements Serializable{
 
     
     
-    private Compras makePurchase(int key, Compras compraAtual){
-        key = intCheck(key, true);
-        
+    private Compras makePurchase(int key, Compras compraAtual, Boolean clientType, Boolean hasPromo){
+        key = mcll.intCheck(key, true);
+        int promo = 0;
+        if(hasPromo){
+            promo = 2 + (int)(Math.random() * ((4-2)+1));
+            System.out.println(promo);
+        }
+        //Min + (int)(Math.random() * ((Max - Min) + 1))
         switch (key) {
             case 1:
                 printAll(key);
-                break;
+                makePurchase(key, compraAtual, clientType, hasPromo);
 
             case 2:
                 printAll(key);
-                buyMobilia(compraAtual);
+                if(hasPromo && promo == 2){
+                    System.out.println("Promoção ativa.");
+                    hasPromo = true;
+                }
+                compraAtual.buyMobilia(compraAtual, clientType, prodMobilia, prods, hasPromo);
                 break;
 
             case 3:
                 printAll(key);
-                buyLimpeza(compraAtual);
+                if(hasPromo && promo == 3){
+                    System.out.println("Promoção ativa.");
+                    hasPromo = true;
+                }
+                compraAtual.buyLimpeza(compraAtual, clientType, prodLimpeza, prods, hasPromo);
                 break;
 
             case 4:
                 printAll(key);
-                buyAlimentares(compraAtual);
+                if(hasPromo && promo == 4){
+                    System.out.println("Promoção ativa.");
+                    hasPromo = true;
+                }
+                compraAtual.buyAlimentares(compraAtual, clientType, prodAlimentares, prods, hasPromo);
                 break;  
 
             default:
                 System.out.println("Invalid Input.");
-                makePurchase(key, compraAtual);
+                makePurchase(key, compraAtual, clientType, hasPromo);
                 break;
         }
 
@@ -205,18 +242,7 @@ public class Supermercado implements Serializable{
         return cte;
     }
     
-    private int intCheck(int k, boolean state){
-        Scanner sc = new Scanner(System.in);
-        try{
-            if(state)
-                System.out.println("1 -> Mostrar Produtos disponiveis. \n2 -> Comprar Produto de Mobiliario. \n3 -> Comprar Produtos de Limpeza. \n4 -> Comprar Produtos Alimentares");
-            k = sc.nextInt();
-        } catch(Exception e){
-            System.out.println("Input invalido. Tente Novamente.");
-            intCheck(k, state);
-        }
-        return k;
-    }
+    
 
     private void printAll(int key){
 
@@ -242,24 +268,31 @@ public class Supermercado implements Serializable{
         }
     }
 
-    private void buyMobilia(Compras compra) {
+
+    /*
+    private void buyMobilia(Compras compra, Boolean cType) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Insira o número do produto que pretende comprar: ");
-        int prod = 0; prod = intCheck(prod, false);
+        int prod = 0; prod = mcll.intCheck(prod, false);
         
         
         int stock = 0;
         System.out.println("Quantos " + prodMobilia.get(prod).getNomeProd() + " gostaria de comprar. Stock atual: " + prodMobilia.get(prod).getStock());
-        stock = intCheck(stock, false);
+        stock = mcll.intCheck(stock, false);
         double price = 0;
         if(stock > prodMobilia.get(prod).getStock()) {
             System.out.println("Não há stock suficiente para essa compra.");
-            buyMobilia(compra);
+            buyMobilia(compra, cType);
         }else if(stock == 0){
             System.out.println("Compra Invalida. Compras requerem no minimo a compra de 1.");
-            buyMobilia(compra);
+            buyMobilia(compra, cType);
         }else {
             prodMobilia.get(prod).setStock((prodMobilia.get(prod).getStock() - stock));
+            
+            if(prodMobilia.get(prod).getPeso() >= 15){
+                price += 10;
+            }
+            
             price = stock * prodMobilia.get(prod).getPrecoUni() * 1.23;
             price = (double)Math.round(price * 100) / 100;
             System.out.println("Preco da compra (com IVA): " + price + "GETPRICE" + compra.getPriceTot());
@@ -273,26 +306,34 @@ public class Supermercado implements Serializable{
         }
     }
 
-    private void buyLimpeza(Compras compra) {
+    private void buyLimpeza(Compras compra, Boolean cType) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Insira o número do produto que pretende comprar: ");
-        int prod = 0; prod = intCheck(prod, false);
+        int prod = 0; prod = mcll.intCheck(prod, false);
         
         
         int stock = 0;
         System.out.println("Quantos " + prodLimpeza.get(prod).getNomeProd() + " gostaria de comprar. Stock atual: " + prodLimpeza.get(prod).getStock());
-        stock = intCheck(stock, false);
+        stock = mcll.intCheck(stock, false);
         double price = 0;
         if(stock > prodLimpeza.get(prod).getStock()) {
             System.out.println("Não há stock suficiente para essa compra.");
-            buyLimpeza(compra);
+            buyLimpeza(compra, cType);
         } else if(stock == 0){
             System.out.println("Compra Invalida. Compras requerem no minimo a compra de 1.");
-            buyLimpeza(compra);
+            buyLimpeza(compra, cType);
         }else {
-            prodLimpeza.get(prod).setStock((prodMobilia.get(prod).getStock() - stock));
+            prodLimpeza.get(prod).setStock((prodLimpeza.get(prod).getStock() - stock));
             price = stock * prodLimpeza.get(prod).getPrecoUni() * 1.23;
             price = (double)Math.round(price * 100) / 100;
+            
+            if(cType){
+                if(price < 40)
+                    price += 15;
+            } else{
+                price += 20;
+            }
+
             System.out.println("Preco da compra (com IVA): " + price + "GETPRICE" + compra.getPriceTot());
             compra.setPriceTot(compra.getPriceTot()+price);
 
@@ -304,36 +345,47 @@ public class Supermercado implements Serializable{
         }
     }
 
-    private void buyAlimentares(Compras compra) {
+    private void buyAlimentares(Compras compra, Boolean cType) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Insira o número do produto que pretende comprar: ");
-        int prod = 0; prod = intCheck(prod, false);
+        int prod = 0; prod = mcll.intCheck(prod, false);
         
         
         int stock = 0;
         System.out.println("Quantos " + prodAlimentares.get(prod).getNomeProd() + " gostaria de comprar. Stock atual: " + prodAlimentares.get(prod).getStock());
-        stock = intCheck(stock, false);
+        stock = mcll.intCheck(stock, false);
         double price = 0;
         if(stock > prodAlimentares.get(prod).getStock()) {
             System.out.println("Não há stock suficiente para essa compra.");
-            buyLimpeza(compra);
+            buyAlimentares(compra, cType);
         }else if(stock == 0){
             System.out.println("Compra Invalida. Compras requerem no minimo a compra de 1.");
-            buyAlimentares(compra);
+            buyAlimentares(compra, cType);
         } else {
-            prodAlimentares.get(prod).setStock((prodMobilia.get(prod).getStock() - stock));
+            prodAlimentares.get(prod).setStock((prodAlimentares.get(prod).getStock() - stock));
             price = stock * prodAlimentares.get(prod).getPrecoUni() * 1.23;
             price = (double)Math.round(price * 100) / 100;
+
+            if(cType){
+                if(price < 40)
+                    price += 15;
+            } else{
+                price += 20;
+            }
+
             System.out.println("Preco da compra (com IVA): " + price + "GETPRICE" + compra.getPriceTot());
             compra.setPriceTot(compra.getPriceTot()+price);
 
             Alimentares lp = new Alimentares(prodAlimentares.get(0).getCalPerCem(),prodAlimentares.get(0).fatPercent, prodAlimentares.get(0).getIdentificador(), prodAlimentares.get(0).getNomeProd(),
              prodAlimentares.get(0).getPrecoUni(), stock);
             
+            
             prods.add(lp);
             compra.setProd(prods);
         }
     }
+
+*/
 
 
 }

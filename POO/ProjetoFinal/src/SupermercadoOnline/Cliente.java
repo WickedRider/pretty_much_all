@@ -10,15 +10,16 @@ public class Cliente implements Serializable {
     protected long telefone;
     protected String data;
     ArrayList<Compras> cmp;
+    protected Boolean freq;
 
-
-    public Cliente(String nome, String morada, String mail, long telefone, String data, ArrayList<Compras> cmp) {
+    public Cliente(String nome, String morada, String mail, long telefone, String data, ArrayList<Compras> cmp, Boolean freq) {
         this.nome = nome;
         this.morada = morada;
         this.mail = mail;
         this.telefone = telefone;
         this.data = data;
         this.cmp = cmp;
+        this.freq = freq;
     }
 
     public Cliente() {
@@ -40,10 +41,26 @@ public class Cliente implements Serializable {
         for (Compras c : getCmp()) {
             string = string + c.toString();
         }
-
+        // if(isFreq()){
+        //     string += ", é um cliente frequente.";
+        // } else {
+        //     string += ", é um cliente regular.";
+        // }
         return string;
     }   
     
+
+    public Boolean isFreq() {
+        return this.freq;
+    }
+
+    public Boolean getFreq() {
+        return this.freq;
+    }
+
+    public void setFreq(Boolean freq) {
+        this.freq = freq;
+    }
 
     public ArrayList<Compras> getCmp() {
         return this.cmp;

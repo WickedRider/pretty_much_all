@@ -35,7 +35,7 @@ public class FileDealer implements Serializable {
 /** 
      * @param f
      */
-    public FileDealer lineParsing(File fTxt, File fObj, FileDealer f, ArrayList<Compras> cmp){
+    public FileDealer lineParsing(File fTxt, File fObj, FileDealer f){
         
         try{
             FileReader fr = new FileReader(fTxt);
@@ -48,12 +48,12 @@ public class FileDealer implements Serializable {
                 split = check.split("§");
                 //CLIENTES FREQUENTES
                 if(split[0].equals("FREQ") && (split.length == 6)){
-                    Cliente cl = new Cliente(split[1], split[2], split[3], Long.parseLong(split[4]), split[5], cmp);
+                    Cliente cl = new Cliente(split[1], split[2], split[3], Long.parseLong(split[4]), split[5], compras, true);
                     clienteFreq.add(cl);
                 }
                 //CLIENTES REGULARES
                 if(split[0].equals("REG") && (split.length == 6)){
-                    Cliente cl = new Cliente(split[1], split[2], split[3], Long.parseLong(split[4]), split[5], cmp);
+                    Cliente cl = new Cliente(split[1], split[2], split[3], Long.parseLong(split[4]), split[5], compras, false);
                     clienteReg.add(cl);
                 }
                 //PRODUTOS MOBILIARIOS
@@ -96,18 +96,24 @@ public class FileDealer implements Serializable {
     }
     
     
-    public void writeToObjectFile(File f, FileDealer f1){
+    public void writeToObjectFile(File f, FileDealer f1, Cliente cl){
         
         try{
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream ooS = new ObjectOutputStream(fos);
-            
+            int a = 0;
+            if((a = findCliente(cl, f1.getClienteFreq())) != -1){
+                f1.getClienteFreq().get(a).setCmp(cl.getCmp());
+            }
+            if((a = findCliente(cl, f1.getClienteReg())) != -1){
+                f1.getClienteReg().get(a).setCmp(cl.getCmp());
+            }
+
             ooS.writeObject(f1.getClienteFreq());
             ooS.writeObject(f1.getClienteReg());
             ooS.writeObject(f1.getProdMobilia());
             ooS.writeObject(f1.getProdLimpeza());
             ooS.writeObject(f1.getProdAlimentares());
-            // ooS.writeObject(f1.getCompras());
             ooS.close();
             // FileInputStream fis = new FileInputStream(f);
             // ObjectInputStream oiS = new ObjectInputStream(fis);
@@ -116,10 +122,8 @@ public class FileDealer implements Serializable {
             // System.out.println(" " + oiS.readObject()+ "\n");
             // System.out.println(" " + oiS.readObject()+ "\n");
             // System.out.println(" " + oiS.readObject()+ "\n");
-            // System.out.println("COMPRAS:" + oiS.readObject()+ "\n");
-            // oiS.close();
-            ooS.close();
-        } // catch(ClassNotFoundException e) {
+            //oiS.close();
+        } //catch(ClassNotFoundException e) {
             
         // }
          catch(Exception e){
@@ -127,6 +131,19 @@ public class FileDealer implements Serializable {
         }
     }
     
+    private int findCliente(Cliente c, ArrayList<Cliente> arrc){
+        int a = -1;
+
+        for (int i = 0; i < arrc.size(); i++) {
+            if(c.getMail().equals(arrc.get(0).getMail())){
+                return i;
+            }
+        }
+
+
+        return a;
+    }
+
     @SuppressWarnings("unchecked")
     public FileDealer fromObjFile(File f, FileDealer f1){
         try{
