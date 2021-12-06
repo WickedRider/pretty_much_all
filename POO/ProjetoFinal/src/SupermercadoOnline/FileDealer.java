@@ -13,8 +13,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class FileDealer implements Serializable {
-    File fTxt = new File("src/SupermercadoOnline/loja.txt");
-    File fObj = new File("src/SupermercadoOnline/lojaObj.obj");
+    File fTxt = new File("POO/ProjetoFinal/src/SupermercadoOnline/loja.txt");
+    File fObj = new File("POO/ProjetoFinal/src/SupermercadoOnline/lojaObj.obj");
+    //File fTxt = new File("src/SupermercadoOnline/loja.txt");
+    //File fObj = new File("src/SupermercadoOnline/lojaObj.obj");
     ArrayList<Cliente> clienteFreq;
     ArrayList<Cliente> clienteReg;
     ArrayList<Mobiliario> prodMobilia;

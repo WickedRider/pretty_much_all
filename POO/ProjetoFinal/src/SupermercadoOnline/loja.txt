@@ -1,4 +1,4 @@
-FREQ§Cliente 1§dawfasefsefa§a@t.c§111111111§28/11/2002
+FREQ§Cliente 1§dawfasefsefa§a@f.c§111111111§28/11/2002
 REG§Cliente 2§fsrahgetjhrt§a@f.p§222222222§15/09/2001
 
 MOB§15§10x15x20§000001§thiiiis§25.21§50

@@ -20,6 +20,8 @@ import java.util.Scanner;
  * promos:
  *          take4pay3 - checked
  *          pagueMenos - to be done, prob segunda
+ *          MISSING DATES - beg and end
+ *          remove random shit, only dates
  */
 
 
@@ -267,125 +269,4 @@ public class Supermercado implements Serializable{
             }
         }
     }
-
-
-    /*
-    private void buyMobilia(Compras compra, Boolean cType) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Insira o número do produto que pretende comprar: ");
-        int prod = 0; prod = mcll.intCheck(prod, false);
-        
-        
-        int stock = 0;
-        System.out.println("Quantos " + prodMobilia.get(prod).getNomeProd() + " gostaria de comprar. Stock atual: " + prodMobilia.get(prod).getStock());
-        stock = mcll.intCheck(stock, false);
-        double price = 0;
-        if(stock > prodMobilia.get(prod).getStock()) {
-            System.out.println("Não há stock suficiente para essa compra.");
-            buyMobilia(compra, cType);
-        }else if(stock == 0){
-            System.out.println("Compra Invalida. Compras requerem no minimo a compra de 1.");
-            buyMobilia(compra, cType);
-        }else {
-            prodMobilia.get(prod).setStock((prodMobilia.get(prod).getStock() - stock));
-            
-            if(prodMobilia.get(prod).getPeso() >= 15){
-                price += 10;
-            }
-            
-            price = stock * prodMobilia.get(prod).getPrecoUni() * 1.23;
-            price = (double)Math.round(price * 100) / 100;
-            System.out.println("Preco da compra (com IVA): " + price + "GETPRICE" + compra.getPriceTot());
-            compra.setPriceTot(compra.getPriceTot()+price);
-
-            Mobiliario mb = new Mobiliario(prodMobilia.get(0).getPeso(), prodMobilia.get(0).getDimensao(), prodMobilia.get(0).getIdentificador(),
-            prodMobilia.get(0).getNomeProd(), prodMobilia.get(0).getPrecoUni(), stock);
-            
-            prods.add(mb);
-            compra.setProd(prods);
-        }
-    }
-
-    private void buyLimpeza(Compras compra, Boolean cType) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Insira o número do produto que pretende comprar: ");
-        int prod = 0; prod = mcll.intCheck(prod, false);
-        
-        
-        int stock = 0;
-        System.out.println("Quantos " + prodLimpeza.get(prod).getNomeProd() + " gostaria de comprar. Stock atual: " + prodLimpeza.get(prod).getStock());
-        stock = mcll.intCheck(stock, false);
-        double price = 0;
-        if(stock > prodLimpeza.get(prod).getStock()) {
-            System.out.println("Não há stock suficiente para essa compra.");
-            buyLimpeza(compra, cType);
-        } else if(stock == 0){
-            System.out.println("Compra Invalida. Compras requerem no minimo a compra de 1.");
-            buyLimpeza(compra, cType);
-        }else {
-            prodLimpeza.get(prod).setStock((prodLimpeza.get(prod).getStock() - stock));
-            price = stock * prodLimpeza.get(prod).getPrecoUni() * 1.23;
-            price = (double)Math.round(price * 100) / 100;
-            
-            if(cType){
-                if(price < 40)
-                    price += 15;
-            } else{
-                price += 20;
-            }
-
-            System.out.println("Preco da compra (com IVA): " + price + "GETPRICE" + compra.getPriceTot());
-            compra.setPriceTot(compra.getPriceTot()+price);
-
-            Limpeza lp = new Limpeza(prodLimpeza.get(0).getGTox(), prodLimpeza.get(0).getIdentificador(), prodLimpeza.get(0).getNomeProd(),
-             prodLimpeza.get(0).getPrecoUni(), stock);
-            
-            prods.add(lp);
-            compra.setProd(prods);
-        }
-    }
-
-    private void buyAlimentares(Compras compra, Boolean cType) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Insira o número do produto que pretende comprar: ");
-        int prod = 0; prod = mcll.intCheck(prod, false);
-        
-        
-        int stock = 0;
-        System.out.println("Quantos " + prodAlimentares.get(prod).getNomeProd() + " gostaria de comprar. Stock atual: " + prodAlimentares.get(prod).getStock());
-        stock = mcll.intCheck(stock, false);
-        double price = 0;
-        if(stock > prodAlimentares.get(prod).getStock()) {
-            System.out.println("Não há stock suficiente para essa compra.");
-            buyAlimentares(compra, cType);
-        }else if(stock == 0){
-            System.out.println("Compra Invalida. Compras requerem no minimo a compra de 1.");
-            buyAlimentares(compra, cType);
-        } else {
-            prodAlimentares.get(prod).setStock((prodAlimentares.get(prod).getStock() - stock));
-            price = stock * prodAlimentares.get(prod).getPrecoUni() * 1.23;
-            price = (double)Math.round(price * 100) / 100;
-
-            if(cType){
-                if(price < 40)
-                    price += 15;
-            } else{
-                price += 20;
-            }
-
-            System.out.println("Preco da compra (com IVA): " + price + "GETPRICE" + compra.getPriceTot());
-            compra.setPriceTot(compra.getPriceTot()+price);
-
-            Alimentares lp = new Alimentares(prodAlimentares.get(0).getCalPerCem(),prodAlimentares.get(0).fatPercent, prodAlimentares.get(0).getIdentificador(), prodAlimentares.get(0).getNomeProd(),
-             prodAlimentares.get(0).getPrecoUni(), stock);
-            
-            
-            prods.add(lp);
-            compra.setProd(prods);
-        }
-    }
-
-*/
-
-
 }
