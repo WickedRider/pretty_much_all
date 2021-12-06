@@ -27,10 +27,11 @@ public class Miscellaneous implements Serializable{
     }
 
 
-    public int getInt(){
+    public int getInt(String message){
         Scanner sc = new Scanner(System.in);
         while(true){
             try{
+                System.out.println(message);
                 return sc.nextInt();
             } catch (InputMismatchException e){
                 sc.next();

@@ -8,7 +8,7 @@ public class Compras implements Serializable{
     protected double priceTot;
     ArrayList<Produtos> prod;
     Miscellaneous mcll = new Miscellaneous();
-
+    Promocao prm;
 
     public Compras(ArrayList<Produtos> prod, double priceTot){
         prod = new ArrayList<Produtos>();
@@ -48,13 +48,11 @@ public class Compras implements Serializable{
     
     public void buyMobilia(Compras compra, Boolean cType, ArrayList<Mobiliario> prodMobilia, ArrayList<Produtos> prods, Boolean promo) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Insira o número do produto que pretende comprar: ");
-        int prod = 0; prod = mcll.getInt();
+        int prod = 0; prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
         
         while(prod > prodMobilia.size()-1 || prod < 0) {
             System.out.println("Valor inválido. Produto não existe");
-            System.out.println("Insira o número do produto que pretende comprar: ");
-            prod = mcll.getInt();
+            prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
         }
         
         int stock = 0;
@@ -83,8 +81,8 @@ public class Compras implements Serializable{
             compra.setPriceTot(compra.getPriceTot()+price);
             System.out.println("Preco da compra (com IVA): " + price);
 
-            Mobiliario mb = new Mobiliario(prodMobilia.get(0).getPeso(), prodMobilia.get(0).getDimensao(), prodMobilia.get(0).getIdentificador(),
-            prodMobilia.get(0).getNomeProd(), prodMobilia.get(0).getPrecoUni(), stock);
+            Mobiliario mb = new Mobiliario(prodMobilia.get(prod).getPeso(), prodMobilia.get(prod).getDimensao(), prodMobilia.get(prod).getIdentificador(),
+            prodMobilia.get(prod).getNomeProd(), prodMobilia.get(prod).getPrecoUni(), stock);
             
             prods.add(mb);
             compra.setProd(prods);
@@ -93,13 +91,11 @@ public class Compras implements Serializable{
 
     public void buyLimpeza(Compras compra, Boolean cType, ArrayList<Limpeza> prodLimpeza, ArrayList<Produtos> prods, Boolean promo) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Insira o número do produto que pretende comprar: ");
-        int prod = 0; prod = mcll.getInt();
+        int prod = 0; prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
         
         while(prod > prodLimpeza.size()-1 || prod < 0) {
             System.out.println("Valor inválido. Produto não existe");
-            System.out.println("Insira o número do produto que pretende comprar: ");
-            prod = mcll.getInt();
+            prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
         }
         
         int stock = 0;
@@ -134,22 +130,20 @@ public class Compras implements Serializable{
             System.out.println("Preco da compra (com IVA): " + price);
             compra.setPriceTot(compra.getPriceTot()+price);
 
-            Limpeza lp = new Limpeza(prodLimpeza.get(0).getGTox(), prodLimpeza.get(0).getIdentificador(), prodLimpeza.get(0).getNomeProd(),
-             prodLimpeza.get(0).getPrecoUni(), stock);
+            Limpeza lp = new Limpeza(prodLimpeza.get(prod).getGTox(), prodLimpeza.get(prod).getIdentificador(), prodLimpeza.get(prod).getNomeProd(),
+             prodLimpeza.get(prod).getPrecoUni(), stock);
             
             prods.add(lp);
             compra.setProd(prods);
         }
     }
 
-    public void buyAlimentares(Compras compra, Boolean cType, ArrayList<Alimentares> prodAlimentares, ArrayList<Produtos> prods, Boolean promo) {
+    public void buyAlimentares(Compras compra, Boolean cType, ArrayList<Alimentares> prodAlimentares, ArrayList<Produtos> prods, int promo) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Insira o número do produto que pretende comprar: ");
-        int prod = 0; prod = mcll.getInt();
+        int prod = 0; prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
         while(prod > prodAlimentares.size()-1 || prod < 0) {
             System.out.println("Valor inválido. Produto não existe");
-            System.out.println("Insira o número do produto que pretende comprar: ");
-            prod = mcll.getInt();
+            prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
         }
         
         int stock = 0;
@@ -174,23 +168,34 @@ public class Compras implements Serializable{
                 System.out.println("Preco de entrega ao domicilio: 20");
             }
 
-            if(!promo){
+            if(promo == 0){
                 price = (double)Math.round((stock * prodAlimentares.get(prod).getPrecoUni() * 1.23) * 100) / 100;
                 System.out.println("Preco da compra (com IVA): " + price);
-            }else {
+            }else if(promo == 1){
+                prm = new Promocao(prods, priceTot, true);
                 int i = take4pay3(stock);
                 price = (double)Math.round((i * prodAlimentares.get(prod).getPrecoUni() * 1.23) * 100) / 100;
                 System.out.println("\n\nPreco da compra, com aplicação da promoção leve 4 pague 3 (com IVA): " + price + ". Dos " + stock + " pagou " + i);
+            } else {
+                price = pagueMenos(stock, price);
+                prm = new Promocao(prods, priceTot, false);
+                
             }
-
-            compra.setPriceTot(compra.getPriceTot()+price);
-
-            Alimentares lp = new Alimentares(prodAlimentares.get(0).getCalPerCem(),prodAlimentares.get(0).fatPercent, prodAlimentares.get(0).getIdentificador(), prodAlimentares.get(0).getNomeProd(),
-             prodAlimentares.get(0).getPrecoUni(), stock);
             
+            Alimentares lp = new Alimentares(prodAlimentares.get(prod).getCalPerCem(),prodAlimentares.get(prod).fatPercent, prodAlimentares.get(prod).getIdentificador(), prodAlimentares.get(0).getNomeProd(),
+            prodAlimentares.get(prod).getPrecoUni(), stock);
+            
+            
+            if(promo == 0){
+
+                compra.setPriceTot(compra.getPriceTot()+price);
+                compra.setProd(prods);
+            } else {
+                prm.setPriceTot(prm.getPriceTot()+price); 
+                prm.setProd(prods);
+            }
             
             prods.add(lp);
-            compra.setProd(prods);
         }
     }
 
@@ -201,6 +206,16 @@ public class Compras implements Serializable{
         return (stock-sub);
     }
 
+    private double pagueMenos(int stock, double price){
+        int per = 100;
+        for (int i = 0; i < stock; i++) {
+            if(per == 50)
+                break;
+            per -= 5;
+        }
+        price = (double)Math.round(price + (per/100) * 100) / 100;
 
+        return price;
+    }
     
 }

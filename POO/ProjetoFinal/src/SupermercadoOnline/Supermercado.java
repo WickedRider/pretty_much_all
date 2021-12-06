@@ -58,12 +58,21 @@ public class Supermercado implements Serializable{
     }
     
     private void start(){
-        ArrayList<Compras> compras = new ArrayList<Compras>();
         Compras compraAtual = new Compras();
+        ArrayList<Compras> compras = new ArrayList<Compras>();
         prods = new ArrayList<Produtos>();
         
-        Boolean hPromo = r.nextBoolean();
-        System.out.println(hPromo);
+        Boolean hPromo = true;
+
+        Data dt = new Data();
+        Data dInicial = new Data(12, 11, 2021);
+        Data dFinal = new Data(25, 11, 2021);
+
+        if(dInicial.getAno() != dt.getAno() || dInicial.getMes() != dt.getMes()){
+            hPromo = false;
+        } else if (dInicial.getDia() > dt.getDia() && dFinal.getDia() < dt.getDia() && dt.getMes() != dInicial.getMes()) {
+            hPromo = false;
+        } 
 
         fd1 = new FileDealer();
         File fTxt = fd1.getFTxt();
@@ -88,7 +97,8 @@ public class Supermercado implements Serializable{
             prodLimpeza = fd1.getProdLimpeza();
             prodAlimentares = fd1.getProdAlimentares();
 
-            
+            System.out.println("Defina a data corrente: ");
+            dt.setData(dt);
 
             Cliente currentCl = login();
             while(currentCl.getNome() == null){
@@ -101,8 +111,7 @@ public class Supermercado implements Serializable{
             }
             compras = currentCl.getCmp();
             while(!exit){
-                System.out.println("\nEscolha uma das opcões para prosseguir:\n-1 -> Proceder a uma compra.\n-2 -> Verificar compras feitas.\nQualquer outro valor -> para sair.");
-                key = mcll.getInt();
+                key = mcll.getInt("\nEscolha uma das opcões para prosseguir:\n-1 -> Proceder a uma compra.\n-2 -> Verificar compras feitas.\nQualquer outro valor -> para sair.");
 
                 switch (key) {
                     case 1:
@@ -173,7 +182,6 @@ public class Supermercado implements Serializable{
                 printAll(key);
                 if(hasPromo && promo == 2){
                     System.out.println("Promoção ativa.");
-                    hasPromo = true;
                 }
                 compraAtual.buyMobilia(compraAtual, clientType, prodMobilia, prods, hasPromo);
                 break;
@@ -182,7 +190,7 @@ public class Supermercado implements Serializable{
                 printAll(key);
                 if(hasPromo && promo == 3){
                     System.out.println("Promoção ativa.");
-                    hasPromo = true;
+                    
                 }
                 compraAtual.buyLimpeza(compraAtual, clientType, prodLimpeza, prods, hasPromo);
                 break;
