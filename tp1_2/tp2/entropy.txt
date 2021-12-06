@@ -1,0 +1,3 @@
+RUN_LENGTH_ENCODING
+Entropy of dataset/bible.txt 4.342751389250246
+Entropy of dataset/bible1.txt 3.2255157285149707

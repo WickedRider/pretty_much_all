@@ -4,31 +4,16 @@
 import numpy as np
 import os
 
+
+
+
 '''
 RLE:
     random.txt : IN:96767 OUT:187842    RLE ratio: -94.1%
     
 
 '''
-# Perform Run–length encoding (RLE) data compression algorithm on string `str`
-def RLencode(s):
- 
-    encoding = "" # stores output string
- 
-    i = 0
-    while i < len(s):
-        # count occurrences of character at index `i`
-        count = 1
- 
-        while i + 1 < len(s) and s[i] == s[i + 1]:
-            count = count + 1
-            i = i + 1
- 
-        # append current character and its count to the result
-        encoding += str(count) + s[i]
-        i = i + 1
- 
-    return encoding
+
  
 def readText(filename):
     alfa = "ABCDEFGHIJKLMOPQRSTUVWXYZ"
@@ -106,36 +91,82 @@ def getAlpha(source):
             
     return a
 
+def writeEntropy(source, forAlf, string):
+    with open("entropy.txt", "a") as f:
+        f.write("Entropy of "+string+" "+str(entropia(source, getAlpha(forAlf))))
+        f.write("\n")
+
+# Perform Run–length encoding (RLE) data compression algorithm on string `str`
+def RLencode(s):
+ 
+    encoding = "" # stores output string
+    print(encoding)
+    i = 0
+    while i < len(s):
+        # count occurrences of character at index `i`
+        count = 1
+        if(s[i] == ' '):
+            encoding += str(count)+" "
+            i=i+1
+        
+        while i + 1 < len(s) and s[i] == s[i + 1]:
+            count = count + 1
+            i = i + 1
+ 
+        # append current character and its count to the result
+        encoding += str(count) + s[i]
+        i = i + 1
+
+ 
+    return encoding
+   
+def RLdecode(source):
+    toDeco = ""
+    for i in range(0, len(source), 2):
+        for n in range(int(source[i])):
+            toDeco+=source[i+1]
+        
+    return toDeco
+            
 
 def main():
+    with open("entropy.txt", "w"):
+        pass
     filesIn = ["dataset/bible.txt", "dataset/finance.csv", "dataset/jquery-3.6.0.js", "dataset/random.txt"]
     filesOut = ["dataset/bible1.txt", "dataset/finance1.csv", "dataset/jquery-3.6.0.1.js", "dataset/random1.txt"]
-    for i in range(len(filesIn)):
-        stri = filesIn[i]
-        fileOut = filesOut[i]
-        sure = readText(stri)
-        size1 = os.path.getsize(stri)
-        print(stri+":\n"+"File size: "+str(size1))
-    
-        sure1 = RLencode(sure)
-    
 
-
-
-        with open(fileOut, "w") as f:
-            f.write(sure1)
-        f.close()
-        size2 = os.path.getsize(fileOut)
-        print(fileOut+":\n"+"File size after compression: "+str(size2)) 
+    methods = ["RUN_LENGTH_ENCODING"]
+    for i in range(1):
+        for n in range(len(methods)):
+            stri = filesIn[i]
+            fileOut = filesOut[i]
+            sure = readText(stri)
+            size1 = os.path.getsize(stri)
+            print(stri+":\n"+"File size: "+str(size1))
         
-        sure1 = readText(fileOut)
-        a = size1 / size2
-        print("Compress ratio (bits at input / bits at output): "+str(a))
+            sure1 = RLencode(sure)
         
-        sureNP = np.asarray(sure)
-        sure1NP = np.asarray(sure1)
-        print("Entropia de "+stri+": "+str(entropia(sureNP, getAlpha(sure))))
-        print("Entropia de "+fileOut+": "+str(entropia(sure1NP, getAlpha(sure1)))+"\n")
+            with open("entropy.txt", "a") as f:
+                f.write(methods[n]+"\n")
+
+            with open("decoded.txt", "w") as f1:
+                f1.write(RLdecode(sure1))
+            with open(fileOut, "w") as f:
+                f.write(sure1)
+            f.close()
+            size2 = os.path.getsize(fileOut)
+            print(fileOut+":\n"+"File size after compression: "+str(size2)) 
+            
+            sure1 = readText(fileOut)
+            a = size1 / size2
+            print("Compress ratio (bits at input / bits at output): "+str(a))
+            
+            sureNP = np.asarray(sure)
+            sure1NP = np.asarray(sure1)
+            print("Entropia de "+stri+": "+str(entropia(sureNP, getAlpha(sure))))
+            writeEntropy(sureNP, getAlpha(sure), stri)
+            print("RUN_LENGTH_ENCODING: Entropia de "+fileOut+": "+str(entropia(sure1NP, getAlpha(sure1)))+"\n")
+            writeEntropy(sure1NP, getAlpha(sure1), fileOut)
     
 if __name__ == '__main__':
     main()
