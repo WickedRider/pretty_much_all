@@ -24,6 +24,7 @@ import java.util.Scanner;
  * 
  * ALMOST FINISHED
  * only needs some perfecting and shit
+ * JAVADOCS lmao
  */
 
 
