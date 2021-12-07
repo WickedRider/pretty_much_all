@@ -19,9 +19,11 @@ import java.util.Scanner;
  * delivery prices - checked
  * promos:
  *          take4pay3 - checked
- *          pagueMenos - to be done, prob segunda
- *          MISSING DATES - beg and end
- *          remove random shit, only dates
+ *          pagueMenos - checked
+ *          MISSING DATES - checked
+ * 
+ * ALMOST FINISHED
+ * only needs some perfecting and shit
  */
 
 
@@ -36,7 +38,8 @@ public class Supermercado implements Serializable{
     FileDealer fd1;
     Random r;
     Miscellaneous mcll;
-
+    Promocao prm;
+    private Boolean hPromo = true;
 
     public Supermercado(){
         clienteFreq = new ArrayList<Cliente>();
@@ -62,23 +65,31 @@ public class Supermercado implements Serializable{
         ArrayList<Compras> compras = new ArrayList<Compras>();
         prods = new ArrayList<Produtos>();
         
-        Boolean hPromo = true;
+        
+        fd1 = new FileDealer();
+        File fTxt = fd1.getFTxt();
+        File fObj = fd1.getFObj();
 
         Data dt = new Data();
         Data dInicial = new Data(12, 11, 2021);
         Data dFinal = new Data(25, 11, 2021);
-
+        
+        System.out.println("Defina a data corrente: \n\n\n\n");
+            dt.setData(dt);
+        
         if(dInicial.getAno() != dt.getAno() || dInicial.getMes() != dt.getMes()){
             hPromo = false;
         } else if (dInicial.getDia() > dt.getDia() && dFinal.getDia() < dt.getDia() && dt.getMes() != dInicial.getMes()) {
             hPromo = false;
         } 
+        int promo = 0;
+        if(hPromo){
+            promo = 2 + (int)(Math.random() * ((4-2)+1));
+            System.out.println(promo+"\n\n\n");
+        }
 
-        fd1 = new FileDealer();
-        File fTxt = fd1.getFTxt();
-        File fObj = fd1.getFObj();
-        
-        boolean exit = false;
+        Boolean exit = false;
+        Boolean proceed = false;
         int key = 0;
         Scanner sc = new Scanner(System.in);
         
@@ -97,8 +108,7 @@ public class Supermercado implements Serializable{
             prodLimpeza = fd1.getProdLimpeza();
             prodAlimentares = fd1.getProdAlimentares();
 
-            System.out.println("Defina a data corrente: ");
-            dt.setData(dt);
+            
 
             Cliente currentCl = login();
             while(currentCl.getNome() == null){
@@ -115,10 +125,10 @@ public class Supermercado implements Serializable{
 
                 switch (key) {
                     case 1:
-                        compraAtual = makePurchase(key, compraAtual, currentCl.isFreq(), hPromo);
+                        compraAtual = makePurchase(key, compraAtual, currentCl.isFreq(), promo);
                         compras.set(compras.size()-1, compraAtual);
                         currentCl.setCmp(compras);
-                        System.out.println("\n" + compras + "\n");
+                        proceed = true;
                         break;
                     case 2:
                         if(currentCl.getCmp().get(0) != null){
@@ -132,10 +142,14 @@ public class Supermercado implements Serializable{
                             
 
                             for (Compras c : currentCl.getCmp()) {
+                                if(c.getProd() == null){
+                                    break;
+                                }
                                 price = (double)Math.round(c.getPriceTot()*100)/100;
                                 if(price != 0){
                                     System.out.println("Preco Total = "+price+", Produtos: "+c.toString());
                                 }
+                                
                             }
                         } else {
                             System.out.println("Nao existem compras registadas.");
@@ -145,7 +159,13 @@ public class Supermercado implements Serializable{
 
                         break;
                     default:
-                        compras.set(compras.size()-1,compraAtual);
+                        if(!proceed){
+                            System.out.println(compras+"\n\n\n\n\n\n\n");
+                            compras.set(compras.size()-1,compraAtual);
+                        }else {
+                            System.out.println(compras + "\n\n\n");
+                            compras.add(null);
+                        }
                         currentCl.setCmp(compras);
                         fd1.writeToObjectFile(fObj, fd1, currentCl);
                         exit = true;
@@ -165,48 +185,51 @@ public class Supermercado implements Serializable{
 
     
     
-    private Compras makePurchase(int key, Compras compraAtual, Boolean clientType, Boolean hasPromo){
+    private Compras makePurchase(int key, Compras compraAtual, Boolean clientType, int promo){
         key = mcll.intCheck(key, true);
-        int promo = 0;
-        if(hasPromo){
-            promo = 2 + (int)(Math.random() * ((4-2)+1));
-            System.out.println(promo);
-        }
         //Min + (int)(Math.random() * ((Max - Min) + 1))
         switch (key) {
             case 1:
                 printAll(key);
-                makePurchase(key, compraAtual, clientType, hasPromo);
+                makePurchase(key, compraAtual, clientType, promo);
 
             case 2:
                 printAll(key);
-                if(hasPromo && promo == 2){
+                if(hPromo && promo == 2){
                     System.out.println("Promoção ativa.");
-                }
-                compraAtual.buyMobilia(compraAtual, clientType, prodMobilia, prods, hasPromo);
+                    promo = 0 + (int)(Math.random() * ((1-0)+1));
+                    hPromo = false;
+                }else{promo=3;}
+
+                compraAtual.buyMobilia(compraAtual, clientType, prodMobilia, prods, promo);
                 break;
 
             case 3:
                 printAll(key);
-                if(hasPromo && promo == 3){
+                if(hPromo && promo == 3){
                     System.out.println("Promoção ativa.");
-                    
-                }
-                compraAtual.buyLimpeza(compraAtual, clientType, prodLimpeza, prods, hasPromo);
+                    promo = 0 + (int)(Math.random() * ((1-0)+1));
+                    System.out.println("\\\\\\\\\\1213123131313131313    "+promo);
+                    hPromo = false;
+                }else{promo=3;}
+
+                compraAtual.buyLimpeza(compraAtual, clientType, prodLimpeza, prods, promo);
                 break;
 
             case 4:
                 printAll(key);
-                if(hasPromo && promo == 4){
+                if(hPromo && promo == 4){
                     System.out.println("Promoção ativa.");
-                    hasPromo = true;
-                }
-                compraAtual.buyAlimentares(compraAtual, clientType, prodAlimentares, prods, hasPromo);
+                    promo = 0 + (int)(Math.random() * ((1-0)+1));
+                    hPromo = false;
+                }else{promo=3;}
+
+                compraAtual.buyAlimentares(compraAtual, clientType, prodAlimentares, prods, promo);
                 break;  
 
             default:
                 System.out.println("Invalid Input.");
-                makePurchase(key, compraAtual, clientType, hasPromo);
+                makePurchase(key, compraAtual, clientType, promo);
                 break;
         }
 

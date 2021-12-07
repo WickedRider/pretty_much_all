@@ -14,6 +14,7 @@ public class Compras implements Serializable{
         prod = new ArrayList<Produtos>();
         this.priceTot = priceTot;
     }
+
     public Compras(){
         
     }
@@ -46,7 +47,7 @@ public class Compras implements Serializable{
     }
     
     
-    public void buyMobilia(Compras compra, Boolean cType, ArrayList<Mobiliario> prodMobilia, ArrayList<Produtos> prods, Boolean promo) {
+    public void buyMobilia(Compras compra, Boolean cType, ArrayList<Mobiliario> prodMobilia, ArrayList<Produtos> prods, int promo) {
         Scanner sc = new Scanner(System.in);
         int prod = 0; prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
         
@@ -72,11 +73,19 @@ public class Compras implements Serializable{
                 price += 10;
                 System.out.println("Preco de entrega ao domicilio: 10.0");
             }
-            if(!promo){
+            if(promo == 0){
+                prm = new Promocao(prods, priceTot, false);
                 price = (double)Math.round((stock * prodMobilia.get(prod).getPrecoUni() * 1.23) * 100) / 100;
-            }else {
-                int i = take4pay3(stock);
+                price = prm.pagueMenos(stock, price);
+            }else if(promo == 1){
+                prm = new Promocao(prods, priceTot, true);
+                int i = prm.take4pay3(stock);
                 price = (double)Math.round((i * prodMobilia.get(prod).getPrecoUni() * 1.23) * 100) / 100;
+                System.out.println("\n\nPreco da compra, com aplicação da promoção leve 4 pague 3 (com IVA): " + price + ". Dos " + stock + " pagou " + i);
+            } else {
+                price = (double)Math.round((stock * prodMobilia.get(prod).getPrecoUni() * 1.23) * 100) / 100;
+                System.out.println("Preco da compra (com IVA): " + price);
+                
             }
             compra.setPriceTot(compra.getPriceTot()+price);
             System.out.println("Preco da compra (com IVA): " + price);
@@ -89,7 +98,7 @@ public class Compras implements Serializable{
         }
     }
 
-    public void buyLimpeza(Compras compra, Boolean cType, ArrayList<Limpeza> prodLimpeza, ArrayList<Produtos> prods, Boolean promo) {
+    public void buyLimpeza(Compras compra, Boolean cType, ArrayList<Limpeza> prodLimpeza, ArrayList<Produtos> prods, int promo) {
         Scanner sc = new Scanner(System.in);
         int prod = 0; prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
         
@@ -110,11 +119,19 @@ public class Compras implements Serializable{
             buyLimpeza(compra, cType, prodLimpeza, prods, promo);
         }else {
             prodLimpeza.get(prod).setStock((prodLimpeza.get(prod).getStock() - stock));
-            if(!promo){
+            if(promo == 0){
+                prm = new Promocao(prods, priceTot, false);
                 price = (double)Math.round((stock * prodLimpeza.get(prod).getPrecoUni() * 1.23) * 100) / 100;
-            }else {
-                int i = take4pay3(stock);
+                price = prm.pagueMenos(stock, price);
+            }else if(promo == 1){
+                prm = new Promocao(prods, priceTot, true);
+                int i = prm.take4pay3(stock);
                 price = (double)Math.round((i * prodLimpeza.get(prod).getPrecoUni() * 1.23) * 100) / 100;
+                System.out.println("\n\nPreco da compra, com aplicação da promoção leve 4 pague 3 (com IVA): " + price + ". Dos " + stock + " pagou " + i);
+            } else {
+                price = (double)Math.round((stock * prodLimpeza.get(prod).getPrecoUni() * 1.23) * 100) / 100;
+                System.out.println("Preco da compra (com IVA): " + price);
+                
             }
             
             if(cType){
@@ -169,16 +186,17 @@ public class Compras implements Serializable{
             }
 
             if(promo == 0){
+                prm = new Promocao(prods, priceTot, false);
                 price = (double)Math.round((stock * prodAlimentares.get(prod).getPrecoUni() * 1.23) * 100) / 100;
-                System.out.println("Preco da compra (com IVA): " + price);
+                price = prm.pagueMenos(stock, price);
             }else if(promo == 1){
                 prm = new Promocao(prods, priceTot, true);
-                int i = take4pay3(stock);
+                int i = prm.take4pay3(stock);
                 price = (double)Math.round((i * prodAlimentares.get(prod).getPrecoUni() * 1.23) * 100) / 100;
                 System.out.println("\n\nPreco da compra, com aplicação da promoção leve 4 pague 3 (com IVA): " + price + ". Dos " + stock + " pagou " + i);
             } else {
-                price = pagueMenos(stock, price);
-                prm = new Promocao(prods, priceTot, false);
+                price = (double)Math.round((stock * prodAlimentares.get(prod).getPrecoUni() * 1.23) * 100) / 100;
+                System.out.println("Preco da compra (com IVA): " + price);
                 
             }
             
@@ -186,13 +204,14 @@ public class Compras implements Serializable{
             prodAlimentares.get(prod).getPrecoUni(), stock);
             
             
-            if(promo == 0){
+            if(promo != 0 && promo != 1){
 
                 compra.setPriceTot(compra.getPriceTot()+price);
                 compra.setProd(prods);
             } else {
-                prm.setPriceTot(prm.getPriceTot()+price); 
-                prm.setProd(prods);
+                compra.setPriceTot(prm.getPriceTot()+price);
+                price = (double)Math.round((stock * prodAlimentares.get(prod).getPrecoUni() * 1.23) * 100) / 100;
+                compra.setProd(prods);
             }
             
             prods.add(lp);
@@ -200,22 +219,6 @@ public class Compras implements Serializable{
     }
 
 
-    private int take4pay3(int stock){
-        int sub = (int)Math.floor(stock / 4.0);
 
-        return (stock-sub);
-    }
-
-    private double pagueMenos(int stock, double price){
-        int per = 100;
-        for (int i = 0; i < stock; i++) {
-            if(per == 50)
-                break;
-            per -= 5;
-        }
-        price = (double)Math.round(price + (per/100) * 100) / 100;
-
-        return price;
-    }
     
 }
