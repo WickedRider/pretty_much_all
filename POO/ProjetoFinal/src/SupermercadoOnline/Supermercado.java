@@ -73,7 +73,7 @@ public class Supermercado implements Serializable{
         Data dInicial = new Data(12, 11, 2021);
         Data dFinal = new Data(25, 11, 2021);
         
-        System.out.println("Defina a data corrente: \n\n\n\n");
+        System.out.println("Defina a data corrente: \n");
             dt.setData(dt);
         
         if(dInicial.getAno() != dt.getAno() || dInicial.getMes() != dt.getMes()){
