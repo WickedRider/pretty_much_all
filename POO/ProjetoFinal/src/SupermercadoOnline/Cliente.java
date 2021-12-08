@@ -50,22 +50,42 @@ public class Cliente implements Serializable {
     }   
     
 
+    
+    /** 
+     * @return Boolean
+     */
     public Boolean isFreq() {
         return this.freq;
     }
 
+    
+    /** 
+     * @return Boolean
+     */
     public Boolean getFreq() {
         return this.freq;
     }
 
+    
+    /** 
+     * @param freq
+     */
     public void setFreq(Boolean freq) {
         this.freq = freq;
     }
 
+    
+    /** 
+     * @return ArrayList<Compras>
+     */
     public ArrayList<Compras> getCmp() {
         return this.cmp;
     }
 
+    
+    /** 
+     * @param cmp
+     */
     public void setCmp(ArrayList<Compras> cmp) {
         this.cmp = cmp;
     }

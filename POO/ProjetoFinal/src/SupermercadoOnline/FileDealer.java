@@ -98,6 +98,12 @@ public class FileDealer implements Serializable {
     }
     
     
+    
+    /** 
+     * @param f
+     * @param f1
+     * @param cl
+     */
     public void writeToObjectFile(File f, FileDealer f1, Cliente cl){
         
         try{
@@ -133,6 +139,12 @@ public class FileDealer implements Serializable {
         }
     }
     
+    
+    /** 
+     * @param c
+     * @param arrc
+     * @return int
+     */
     private int findCliente(Cliente c, ArrayList<Cliente> arrc){
         int a = -1;
 
@@ -146,6 +158,12 @@ public class FileDealer implements Serializable {
         return a;
     }
 
+    
+    /** 
+     * @param f
+     * @param f1
+     * @return FileDealer
+     */
     @SuppressWarnings("unchecked")
     public FileDealer fromObjFile(File f, FileDealer f1){
         try{
@@ -172,66 +190,130 @@ public class FileDealer implements Serializable {
 
 
 
+    
+    /** 
+     * @return File
+     */
     public File getFTxt() {
         return this.fTxt;
     }
 
+    
+    /** 
+     * @param fTxt
+     */
     public void setFTxt(File fTxt) {
         this.fTxt = fTxt;
     }
 
+    
+    /** 
+     * @return File
+     */
     public File getFObj() {
         return this.fObj;
     }
 
+    
+    /** 
+     * @param fObj
+     */
     public void setFObj(File fObj) {
         this.fObj = fObj;
     }    
 
+    
+    /** 
+     * @return ArrayList<Cliente>
+     */
     public ArrayList<Cliente> getClienteFreq() {
         return this.clienteFreq;
     }
 
+    
+    /** 
+     * @param clienteFreq
+     */
     public void setClienteFreq(ArrayList<Cliente> clienteFreq) {
         this.clienteFreq = clienteFreq;
     }
 
+    
+    /** 
+     * @return ArrayList<Cliente>
+     */
     public ArrayList<Cliente> getClienteReg() {
         return this.clienteReg;
     }
 
+    
+    /** 
+     * @param clienteReg
+     */
     public void setClienteReg(ArrayList<Cliente> clienteReg) {
         this.clienteReg = clienteReg;
     }
 
+    
+    /** 
+     * @return ArrayList<Mobiliario>
+     */
     public ArrayList<Mobiliario> getProdMobilia() {
         return this.prodMobilia;
     }
 
+    
+    /** 
+     * @param prodMobilia
+     */
     public void setProdMobilia(ArrayList<Mobiliario> prodMobilia) {
         this.prodMobilia = prodMobilia;
     }
 
+    
+    /** 
+     * @return ArrayList<Limpeza>
+     */
     public ArrayList<Limpeza> getProdLimpeza() {
         return this.prodLimpeza;
     }
 
+    
+    /** 
+     * @param prodLimpeza
+     */
     public void setProdLimpeza(ArrayList<Limpeza> prodLimpeza) {
         this.prodLimpeza = prodLimpeza;
     }
 
+    
+    /** 
+     * @return ArrayList<Alimentares>
+     */
     public ArrayList<Alimentares> getProdAlimentares() {
         return this.prodAlimentares;
     }
 
+    
+    /** 
+     * @param prodAlimentares
+     */
     public void setProdAlimentares(ArrayList<Alimentares> prodAlimentares) {
         this.prodAlimentares = prodAlimentares;
     }
 
+    
+    /** 
+     * @return ArrayList<Compras>
+     */
     public ArrayList<Compras> getCompras() {
         return this.compras;
     }
 
+    
+    /** 
+     * @param compras
+     */
     public void setCompras(ArrayList<Compras> compras) {
         this.compras = compras;
     }

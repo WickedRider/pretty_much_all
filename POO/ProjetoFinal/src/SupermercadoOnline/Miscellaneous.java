@@ -9,6 +9,12 @@ public class Miscellaneous implements Serializable{
 
     }
 
+    
+    /** 
+     * @param k
+     * @param state
+     * @return int
+     */
     public int intCheck(int k, boolean state){
         Scanner sc = new Scanner(System.in);
         while(true){
@@ -27,6 +33,11 @@ public class Miscellaneous implements Serializable{
     }
 
 
+    
+    /** 
+     * @param message
+     * @return int
+     */
     public int getInt(String message){
         Scanner sc = new Scanner(System.in);
         while(true){

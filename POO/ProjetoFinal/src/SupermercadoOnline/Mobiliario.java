@@ -48,6 +48,10 @@ public class Mobiliario extends Produtos{
         return this.dimensao;
     }
 
+    
+    /** 
+     * @return String
+     */
     private String getStringDimensao(){
         double[] hold = getDimensao();
         String dimString = "";

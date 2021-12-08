@@ -13,6 +13,10 @@ public class Data {
         this.ano = ano;
     }
 
+    
+    /** 
+     * @param dt
+     */
     public void setData(Data dt){
         mcll = new Miscellaneous();
         dt.setDia(mcll.getInt("Dia: "));
@@ -20,6 +24,10 @@ public class Data {
         dt.setAno(mcll.getInt("Ano: "));
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         return "{" +
@@ -29,26 +37,50 @@ public class Data {
             "}";
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getDia() {
         return this.dia;
     }
 
+    
+    /** 
+     * @param dia
+     */
     public void setDia(int dia) {
         this.dia = dia;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getMes() {
         return this.mes;
     }
 
+    
+    /** 
+     * @param mes
+     */
     public void setMes(int mes) {
         this.mes = mes;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getAno() {
         return this.ano;
     }
 
+    
+    /** 
+     * @param ano
+     */
     public void setAno(int ano) {
         this.ano = ano;
     }

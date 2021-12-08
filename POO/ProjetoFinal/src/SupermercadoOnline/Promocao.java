@@ -11,14 +11,26 @@ public class Promocao extends Compras{
     }
     public Promocao(){}
 
+    
+    /** 
+     * @return Boolean
+     */
     public Boolean isTypeP3T4() {
         return this.typeP3T4;
     }
 
+    
+    /** 
+     * @return Boolean
+     */
     public Boolean getTypeP3T4() {
         return this.typeP3T4;
     }
 
+    
+    /** 
+     * @param typeP3T4
+     */
     public void setTypeP3T4(Boolean typeP3T4) {
         this.typeP3T4 = typeP3T4;
     }
@@ -26,6 +38,10 @@ public class Promocao extends Compras{
     
     
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         String str = super.toString();
@@ -37,12 +53,23 @@ public class Promocao extends Compras{
         return str;
     }
 
+    
+    /** 
+     * @param stock
+     * @return int
+     */
     public int take4pay3(int stock){
         int sub = (int)Math.floor(stock / 4.0);
         System.out.println("ASDWAFAWFAWFAW\n\n\n\n");
         return (stock-sub);
     }
 
+    
+    /** 
+     * @param stock
+     * @param price
+     * @return double
+     */
     public double pagueMenos(int stock, double price){
         double per =  1;
         for (int i = 0; i < stock; i++) {

@@ -19,6 +19,10 @@ public class Compras implements Serializable{
         
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         String string = "";
@@ -30,23 +34,47 @@ public class Compras implements Serializable{
     }
 
 
+    
+    /** 
+     * @return double
+     */
     public double getPriceTot() {
         return this.priceTot;
     }
 
+    
+    /** 
+     * @param priceTot
+     */
     public void setPriceTot(double priceTot) {
         this.priceTot = priceTot;
     }
 
+    
+    /** 
+     * @return ArrayList<Produtos>
+     */
     public ArrayList<Produtos> getProd() {
         return this.prod;
     }
 
+    
+    /** 
+     * @param prod
+     */
     public void setProd(ArrayList<Produtos> prod) {
         this.prod = prod;
     }
     
     
+    
+    /** 
+     * @param compra
+     * @param cType
+     * @param prodMobilia
+     * @param prods
+     * @param promo
+     */
     public void buyMobilia(Compras compra, Boolean cType, ArrayList<Mobiliario> prodMobilia, ArrayList<Produtos> prods, int promo) {
         Scanner sc = new Scanner(System.in);
         int prod = 0; prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
@@ -98,6 +126,14 @@ public class Compras implements Serializable{
         }
     }
 
+    
+    /** 
+     * @param compra
+     * @param cType
+     * @param prodLimpeza
+     * @param prods
+     * @param promo
+     */
     public void buyLimpeza(Compras compra, Boolean cType, ArrayList<Limpeza> prodLimpeza, ArrayList<Produtos> prods, int promo) {
         Scanner sc = new Scanner(System.in);
         int prod = 0; prod = mcll.getInt("Insira o número do produto que pretende comprar: ");
@@ -155,6 +191,14 @@ public class Compras implements Serializable{
         }
     }
 
+    
+    /** 
+     * @param compra
+     * @param cType
+     * @param prodAlimentares
+     * @param prods
+     * @param promo
+     */
     public void buyAlimentares(Compras compra, Boolean cType, ArrayList<Alimentares> prodAlimentares, ArrayList<Produtos> prods, int promo) {
         Scanner sc = new Scanner(System.in);
         int prod = 0; prod = mcll.getInt("Insira o número do produto que pretende comprar: ");

@@ -186,6 +186,14 @@ public class Supermercado implements Serializable{
 
     
     
+    
+    /** 
+     * @param key
+     * @param compraAtual
+     * @param clientType
+     * @param promo
+     * @return Compras
+     */
     private Compras makePurchase(int key, Compras compraAtual, Boolean clientType, int promo){
         key = mcll.intCheck(key, true);
         //Min + (int)(Math.random() * ((Max - Min) + 1))
@@ -237,6 +245,10 @@ public class Supermercado implements Serializable{
         return compraAtual;
     }
     
+    
+    /** 
+     * @return Cliente
+     */
     private Cliente login(){
         Scanner sc = new Scanner(System.in);
         int hold = 0;
@@ -278,6 +290,10 @@ public class Supermercado implements Serializable{
     
     
 
+    
+    /** 
+     * @param key
+     */
     private void printAll(int key){
 
         if(key==2 || key == 1){
