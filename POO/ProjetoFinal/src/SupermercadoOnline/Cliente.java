@@ -159,5 +159,4 @@ public class Cliente implements Serializable {
     public void setData(String data) {
         this.data = data;
     }
-
 }
