@@ -84,7 +84,7 @@ public class Cliente implements Serializable {
 
     
     /** 
-     * @param cmp [ArrayList< Compras >]: definir array com Compras
+     * @param cmp [ArrayList Compras ]: definir array com Compras
      */
     public void setCmp(ArrayList<Compras> cmp) {
         this.cmp = cmp;

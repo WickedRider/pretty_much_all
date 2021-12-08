@@ -192,7 +192,7 @@ public class Supermercado implements Serializable{
      * @param compraAtual [Compras]: Objeto do tipo Compras, guarda toda a informação por run
      * @param clientType [Boolean]: true = frequente; false = regular
      * @param promo [int]: Define qual das promoções será aplicada
-     * @return Compras [ArrayList< Compras >]: ArrayList<Compras> guarda as compras efetudas por cliente
+     * @return Compras [ArrayList Compras ]: ArrayList<Compras> guarda as compras efetudas por cliente
      */
     private Compras makePurchase(int key, Compras compraAtual, Boolean clientType, int promo){
         key = mcll.intCheck(key, true);

@@ -58,7 +58,7 @@ public class Compras implements Serializable{
 
     
     /** 
-     * @param prod [ArrayList< Produtos >]: definir array de produtos
+     * @param prod [ArrayList Produtos ]: definir array de produtos
      */
     public void setProd(ArrayList<Produtos> prod) {
         this.prod = prod;
@@ -70,8 +70,8 @@ public class Compras implements Serializable{
      * Função para comprar Mobilia
      * @param compra [Compras]: array de compras
      * @param cType [Boolean]: tipo de cliente
-     * @param prodMobilia [ArrayList< Mobilia >]: array de produtos de mobilia 
-     * @param prods [ArrayList< Produtos >]: array de produtos
+     * @param prodMobilia [ArrayList Mobilia ]: array de produtos de mobilia 
+     * @param prods [ArrayList Produtos ]: array de produtos
      * @param promo [int]: tipo de promoção a aplicar
      */
     public void buyMobilia(Compras compra, Boolean cType, ArrayList<Mobiliario> prodMobilia, ArrayList<Produtos> prods, int promo) {
@@ -140,8 +140,8 @@ public class Compras implements Serializable{
      * Função para comprar Limpeza
      * @param compra [Compras]: array de compras
      * @param cType [Boolean]: tipo de cliente
-     * @param prodLimpeza [ArrayList< Limpeza >]: array de produtos de limpeza
-     * @param prods [ArrayList< Produtos >]: array de produtos
+     * @param prodLimpeza [ArrayList Limpeza ]: array de produtos de limpeza
+     * @param prods [ArrayList Produtos ]: array de produtos
      * @param promo [int]: tipo de promoção a aplicar
      */
     public void buyLimpeza(Compras compra, Boolean cType, ArrayList<Limpeza> prodLimpeza, ArrayList<Produtos> prods, int promo) {
@@ -215,8 +215,8 @@ public class Compras implements Serializable{
      * Função para comprar Alimentares
      * @param compra [Compras]: array de compras
      * @param cType [Boolean]: tipo de cliente
-     * @param prodAlimentares [ArrayList< Alimentares >]: array de produtos Alimentares 
-     * @param prods [ArrayList< Produtos >]: array de produtos
+     * @param prodAlimentares [ArrayList Alimentares ]: array de produtos Alimentares 
+     * @param prods [ArrayList Produtos ]: array de produtos
      * @param promo [int]: tipo de promoção a aplicar
      */
     public void buyAlimentares(Compras compra, Boolean cType, ArrayList<Alimentares> prodAlimentares, ArrayList<Produtos> prods, int promo) {

@@ -229,7 +229,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param clienteFreq [ArrayList< Cliente >] : definir array de clientes frequentes
+     * @param clienteFreq [ArrayList Cliente ] : definir array de clientes frequentes
      */
     public void setClienteFreq(ArrayList<Cliente> clienteFreq) {
         this.clienteFreq = clienteFreq;
@@ -245,7 +245,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param clienteReg [ArrayList< Cliente >]: definir array de clientes regulares
+     * @param clienteReg [ArrayList Cliente ]: definir array de clientes regulares
      */
     public void setClienteReg(ArrayList<Cliente> clienteReg) {
         this.clienteReg = clienteReg;
@@ -261,7 +261,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param prodMobilia [ArrayList< Mobiliario >]: definir array de mobiliario
+     * @param prodMobilia [ArrayList Mobiliario ]: definir array de mobiliario
      */
     public void setProdMobilia(ArrayList<Mobiliario> prodMobilia) {
         this.prodMobilia = prodMobilia;
@@ -277,7 +277,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param prodLimpeza [ArrayList< Limpeza >]: definir array de Limpeza
+     * @param prodLimpeza [ArrayList Limpeza ]: definir array de Limpeza
      */
     public void setProdLimpeza(ArrayList<Limpeza> prodLimpeza) {
         this.prodLimpeza = prodLimpeza;
@@ -293,7 +293,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param prodAlimentares [ArrayList< Alimentares >]: definir array de Alimentares
+     * @param prodAlimentares [ArrayList Alimentares ]: definir array de Alimentares
      */
     public void setProdAlimentares(ArrayList<Alimentares> prodAlimentares) {
         this.prodAlimentares = prodAlimentares;
@@ -309,7 +309,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param compras [ArrayList< Compras >]: definir array de Compras
+     * @param compras [ArrayList Compras ]: definir array de Compras
      */
     public void setCompras(ArrayList<Compras> compras) {
         this.compras = compras;
