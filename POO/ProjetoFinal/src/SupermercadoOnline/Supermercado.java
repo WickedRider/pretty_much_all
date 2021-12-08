@@ -53,9 +53,7 @@ public class Supermercado implements Serializable{
     }
     
     
-    /** 
-     * @param args
-     */
+    
     public static void main(String[] args){
         Supermercado s = new Supermercado();
         s.start();
@@ -83,6 +81,7 @@ public class Supermercado implements Serializable{
         } else if (dInicial.getDia() > dt.getDia() && dFinal.getDia() < dt.getDia() && dt.getMes() != dInicial.getMes()) {
             hPromo = false;
         } 
+        // escolher qual dos produtos vai ter promoção
         int promo = 0;
         if(hPromo){
             promo = 2 + (int)(Math.random() * ((4-2)+1));
@@ -96,10 +95,10 @@ public class Supermercado implements Serializable{
         
         try{
 
-            if(fObj.createNewFile()){
+            if(fObj.createNewFile()){//so acontece na primeira vez
                 fd1 = fd1.lineParsing(fTxt, fObj, fd1);
                 
-            }else{
+            }else{// ler do ficheiro de objetos
                 fd1 = fd1.fromObjFile(fObj, fd1);
             }
 
@@ -118,9 +117,9 @@ public class Supermercado implements Serializable{
             if(currentCl.getCmp() == null){
                 compras.add(null);
                 currentCl.setCmp(compras);
-                System.out.println("NULL");
             }
             compras = currentCl.getCmp();
+
             while(!exit){
                 key = mcll.getInt("\nEscolha uma das opcões para prosseguir:\n-1 -> Proceder a uma compra.\n-2 -> Verificar compras feitas.\nQualquer outro valor -> para sair.");
 
@@ -188,11 +187,12 @@ public class Supermercado implements Serializable{
     
     
     /** 
-     * @param key
-     * @param compraAtual
-     * @param clientType
-     * @param promo
-     * @return Compras
+     * 
+     * @param key [int]: não funciona exatamente como parametro, apenas para nao criar outro inteiro
+     * @param compraAtual [Compras]: Objeto do tipo Compras, guarda toda a informação por run
+     * @param clientType [Boolean]: true = frequente; false = regular
+     * @param promo [int]: Define qual das promoções será aplicada
+     * @return Compras [ArrayList< Compras >]: ArrayList<Compras> guarda as compras efetudas por cliente
      */
     private Compras makePurchase(int key, Compras compraAtual, Boolean clientType, int promo){
         key = mcll.intCheck(key, true);
@@ -247,7 +247,7 @@ public class Supermercado implements Serializable{
     
     
     /** 
-     * @return Cliente
+     * @return Cliente  que fez login
      */
     private Cliente login(){
         Scanner sc = new Scanner(System.in);
@@ -292,7 +292,8 @@ public class Supermercado implements Serializable{
 
     
     /** 
-     * @param key
+     * Função usada para mostrar todo o stock ou de um certo tipo de produtos
+     * @param key [int] define se mostra todo o stock ou parte
      */
     private void printAll(int key){
 

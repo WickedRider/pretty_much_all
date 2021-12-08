@@ -17,7 +17,7 @@ public class Produtos implements Serializable{
 
     
     /** 
-     * @return String
+     * @return String : produto em string
      */
     @Override
     public String toString() {
@@ -31,7 +31,7 @@ public class Produtos implements Serializable{
 
     
     /** 
-     * @return String
+     * @return String : identificador
      */
     public String getIdentificador() {
         return this.identificador;
@@ -39,7 +39,7 @@ public class Produtos implements Serializable{
 
     
     /** 
-     * @param identificador
+     * @param identificador [String]: definir identificador
      */
     public void setIdentificador(String identificador) {
         this.identificador = identificador;
@@ -47,7 +47,7 @@ public class Produtos implements Serializable{
 
     
     /** 
-     * @return String
+     * @return String : nome do Produto
      */
     public String getNomeProd() {
         return this.nomeProd;
@@ -55,7 +55,7 @@ public class Produtos implements Serializable{
 
     
     /** 
-     * @param nomeProd
+     * @param nomeProd [String]: definir nome do Produto
      */
     public void setNomeProd(String nomeProd) {
         this.nomeProd = nomeProd;
@@ -63,7 +63,7 @@ public class Produtos implements Serializable{
 
     
     /** 
-     * @return double
+     * @return double : preco por unidade
      */
     public double getPrecoUni() {
         return this.precoUni;
@@ -71,7 +71,7 @@ public class Produtos implements Serializable{
 
     
     /** 
-     * @param precoUni
+     * @param precoUni [double]: definir preco por unidade
      */
     public void setPrecoUni(double precoUni) {
         this.precoUni = precoUni;
@@ -79,7 +79,7 @@ public class Produtos implements Serializable{
 
     
     /** 
-     * @return int
+     * @return int : stock
      */
     public int getStock() {
         return this.stock;
@@ -87,7 +87,7 @@ public class Produtos implements Serializable{
 
     
     /** 
-     * @param stock
+     * @param stock [int]: definir stock disponivel
      */
     public void setStock(int stock) {
         this.stock = stock;

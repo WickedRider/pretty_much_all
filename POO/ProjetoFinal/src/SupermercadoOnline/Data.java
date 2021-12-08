@@ -15,7 +15,7 @@ public class Data {
 
     
     /** 
-     * @param dt
+     * @param dt : definir data corrente
      */
     public void setData(Data dt){
         mcll = new Miscellaneous();
@@ -26,7 +26,7 @@ public class Data {
 
     
     /** 
-     * @return String
+     * @return String da data
      */
     @Override
     public String toString() {
@@ -39,7 +39,7 @@ public class Data {
 
     
     /** 
-     * @return int
+     * @return int : dia
      */
     public int getDia() {
         return this.dia;
@@ -47,7 +47,7 @@ public class Data {
 
     
     /** 
-     * @param dia
+     * @param dia [int]: definir dia
      */
     public void setDia(int dia) {
         this.dia = dia;
@@ -55,7 +55,7 @@ public class Data {
 
     
     /** 
-     * @return int
+     * @return int : mes
      */
     public int getMes() {
         return this.mes;
@@ -63,7 +63,7 @@ public class Data {
 
     
     /** 
-     * @param mes
+     * @param mes [int]: definir mes
      */
     public void setMes(int mes) {
         this.mes = mes;
@@ -71,7 +71,7 @@ public class Data {
 
     
     /** 
-     * @return int
+     * @return int : ano
      */
     public int getAno() {
         return this.ano;
@@ -79,7 +79,7 @@ public class Data {
 
     
     /** 
-     * @param ano
+     * @param ano [int]: definir ano
      */
     public void setAno(int ano) {
         this.ano = ano;

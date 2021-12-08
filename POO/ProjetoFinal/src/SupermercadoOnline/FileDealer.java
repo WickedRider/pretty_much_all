@@ -13,10 +13,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class FileDealer implements Serializable {
+    // LAPTOP
     // File fTxt = new File("POO/ProjetoFinal/src/SupermercadoOnline/loja.txt");
     // File fObj = new File("POO/ProjetoFinal/src/SupermercadoOnline/lojaObj.obj");
+    // DESKTOP
     File fTxt = new File("src/SupermercadoOnline/loja.txt");
     File fObj = new File("src/SupermercadoOnline/lojaObj.obj");
+
     ArrayList<Cliente> clienteFreq;
     ArrayList<Cliente> clienteReg;
     ArrayList<Mobiliario> prodMobilia;
@@ -33,10 +36,14 @@ public class FileDealer implements Serializable {
     }
 
 
+/**
+ * 
+ * @param fTxt : ficheiro associado ao path do ficheiro txt
+ * @param fObj : ficheiro associado ao path do ficherio obj
+ * @param f : construtor a ser retornado com a informação adquirida
+ * @return f : contrutor retornado
+ */
 
-/** 
-     * @param f
-     */
     public FileDealer lineParsing(File fTxt, File fObj, FileDealer f){
         
         try{
@@ -60,12 +67,14 @@ public class FileDealer implements Serializable {
                 }
                 //PRODUTOS MOBILIARIOS
                 if(split[0].equals("MOB") && (split.length == 7)){
+                    // DIMENSAO 
                     String[] newSplit = split[2].split("x");
                     double[] split2 = new double[3];
                     int index=0;
                     for (String newString : newSplit) {
                         split2[index] = Double.parseDouble(newString);index++;
                     }
+
                     Mobiliario mb = new Mobiliario(Double.parseDouble(split[1]), split2, split[3], split[4], Double.parseDouble(split[5]), Integer.parseInt(split[6]));
                     prodMobilia.add(mb);
                 }
@@ -100,9 +109,9 @@ public class FileDealer implements Serializable {
     
     
     /** 
-     * @param f
-     * @param f1
-     * @param cl
+     * @param f : ficheiro associado ao path em que vai ser escrita a informação
+     * @param f1 : construtor que guarda toda a informação
+     * @param cl : cliente atual (login)
      */
     public void writeToObjectFile(File f, FileDealer f1, Cliente cl){
         
@@ -123,27 +132,17 @@ public class FileDealer implements Serializable {
             ooS.writeObject(f1.getProdLimpeza());
             ooS.writeObject(f1.getProdAlimentares());
             ooS.close();
-            // FileInputStream fis = new FileInputStream(f);
-            // ObjectInputStream oiS = new ObjectInputStream(fis);
-            // System.out.println(" " + oiS.readObject()+ "\n");
-            // System.out.println(" " + oiS.readObject()+ "\n");
-            // System.out.println(" " + oiS.readObject()+ "\n");
-            // System.out.println(" " + oiS.readObject()+ "\n");
-            // System.out.println(" " + oiS.readObject()+ "\n");
-            //oiS.close();
-        } //catch(ClassNotFoundException e) {
             
-        // }
-         catch(Exception e){
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
     
     
     /** 
-     * @param c
-     * @param arrc
-     * @return int
+     * @param c : cliente atual
+     * @param arrc : array de clientes, onde vai ser procurado c
+     * @return int : index do cliente a procurar, -1 se não encontrar
      */
     private int findCliente(Cliente c, ArrayList<Cliente> arrc){
         int a = -1;
@@ -154,15 +153,14 @@ public class FileDealer implements Serializable {
             }
         }
 
-
         return a;
     }
 
     
     /** 
-     * @param f
-     * @param f1
-     * @return FileDealer
+     * @param f : ficheiro associado ao path do ficheiro a ler
+     * @param f1 : construtor que vai receber a informação do ficheiro
+     * @return FileDealer : construtor com informação
      */
     @SuppressWarnings("unchecked")
     public FileDealer fromObjFile(File f, FileDealer f1){
@@ -175,7 +173,6 @@ public class FileDealer implements Serializable {
             f1.setProdMobilia((ArrayList<Mobiliario>)oiS.readObject());
             f1.setProdLimpeza((ArrayList<Limpeza>)oiS.readObject());
             f1.setProdAlimentares((ArrayList<Alimentares>)oiS.readObject());
-            // f1.setCompras((ArrayList<Compras>)oiS.readObject());
 
             fis.close();
             oiS.close();
@@ -192,7 +189,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @return File
+     * @return File : ficheiro associado ao txt
      */
     public File getFTxt() {
         return this.fTxt;
@@ -200,7 +197,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param fTxt
+     * @param fTxt [File]: definir ficheiro associado ao txt
      */
     public void setFTxt(File fTxt) {
         this.fTxt = fTxt;
@@ -208,7 +205,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @return File
+     * @return File : ficheiro assiciado ao obj
      */
     public File getFObj() {
         return this.fObj;
@@ -216,7 +213,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param fObj
+     * @param fObj [File]: definir ficheiro assiciado ao obj
      */
     public void setFObj(File fObj) {
         this.fObj = fObj;
@@ -224,7 +221,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @return ArrayList<Cliente>
+     * @return ArrayList<Cliente> : array de clientes frequentes
      */
     public ArrayList<Cliente> getClienteFreq() {
         return this.clienteFreq;
@@ -232,7 +229,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param clienteFreq
+     * @param clienteFreq [ArrayList< Cliente >] : definir array de clientes frequentes
      */
     public void setClienteFreq(ArrayList<Cliente> clienteFreq) {
         this.clienteFreq = clienteFreq;
@@ -240,7 +237,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @return ArrayList<Cliente>
+     * @return ArrayList<Cliente> : array de clientes regulares
      */
     public ArrayList<Cliente> getClienteReg() {
         return this.clienteReg;
@@ -248,7 +245,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param clienteReg
+     * @param clienteReg [ArrayList< Cliente >]: definir array de clientes regulares
      */
     public void setClienteReg(ArrayList<Cliente> clienteReg) {
         this.clienteReg = clienteReg;
@@ -256,7 +253,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @return ArrayList<Mobiliario>
+     * @return ArrayList<Mobiliario> : array de produtos de mobiliario
      */
     public ArrayList<Mobiliario> getProdMobilia() {
         return this.prodMobilia;
@@ -264,7 +261,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param prodMobilia
+     * @param prodMobilia [ArrayList< Mobiliario >]: definir array de mobiliario
      */
     public void setProdMobilia(ArrayList<Mobiliario> prodMobilia) {
         this.prodMobilia = prodMobilia;
@@ -272,7 +269,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @return ArrayList<Limpeza>
+     * @return ArrayList<Limpeza> : array de produtos de Limpeza 
      */
     public ArrayList<Limpeza> getProdLimpeza() {
         return this.prodLimpeza;
@@ -280,7 +277,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param prodLimpeza
+     * @param prodLimpeza [ArrayList< Limpeza >]: definir array de Limpeza
      */
     public void setProdLimpeza(ArrayList<Limpeza> prodLimpeza) {
         this.prodLimpeza = prodLimpeza;
@@ -288,7 +285,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @return ArrayList<Alimentares>
+     * @return ArrayList<Alimentares> : array de produtos Alimentares
      */
     public ArrayList<Alimentares> getProdAlimentares() {
         return this.prodAlimentares;
@@ -296,7 +293,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param prodAlimentares
+     * @param prodAlimentares [ArrayList< Alimentares >]: definir array de Alimentares
      */
     public void setProdAlimentares(ArrayList<Alimentares> prodAlimentares) {
         this.prodAlimentares = prodAlimentares;
@@ -304,7 +301,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @return ArrayList<Compras>
+     * @return ArrayList<Compras> : array de compras
      */
     public ArrayList<Compras> getCompras() {
         return this.compras;
@@ -312,7 +309,7 @@ public class FileDealer implements Serializable {
 
     
     /** 
-     * @param compras
+     * @param compras [ArrayList< Compras >]: definir array de Compras
      */
     public void setCompras(ArrayList<Compras> compras) {
         this.compras = compras;

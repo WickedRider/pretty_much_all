@@ -21,7 +21,7 @@ public class Promocao extends Compras{
 
     
     /** 
-     * @return Boolean
+     * @return Boolean : valor de typeP3T4
      */
     public Boolean getTypeP3T4() {
         return this.typeP3T4;
@@ -29,18 +29,17 @@ public class Promocao extends Compras{
 
     
     /** 
-     * @param typeP3T4
+     * @param typeP3T4 [Boolean]: definir valor de typeP3T4
      */
     public void setTypeP3T4(Boolean typeP3T4) {
         this.typeP3T4 = typeP3T4;
     }
 
     
-    
 
     
     /** 
-     * @return String
+     * @return String : tipo de promoção em string
      */
     @Override
     public String toString() {

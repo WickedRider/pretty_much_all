@@ -12,7 +12,7 @@ public class Limpeza extends Produtos{
 
     
     /** 
-     * @return String
+     * @return String produtos concatenada com string caracterizadora de produtos Limpeza
      */
     @Override
     public String toString() {
@@ -23,7 +23,7 @@ public class Limpeza extends Produtos{
 
     
     /** 
-     * @return int
+     * @return int : valor do grau de toxicidade
      */
     public double getGTox() {
         return this.gTox;
@@ -31,7 +31,7 @@ public class Limpeza extends Produtos{
 
     
     /** 
-     * @param gTox
+     * @param gTox [int]: definir grau de toxicidade do produto
      */
     public void setGTox(int gTox) {
         this.gTox = gTox;

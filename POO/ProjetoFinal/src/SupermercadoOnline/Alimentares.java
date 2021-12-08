@@ -16,7 +16,7 @@ public class Alimentares extends Produtos{
 
     
     /** 
-     * @return String
+     * @return String concatenada do produto com string do produto Alimentar
      */
     @Override
     public String toString() {
@@ -28,7 +28,7 @@ public class Alimentares extends Produtos{
 
     
     /** 
-     * @return double
+     * @return double : valor de calorias por cem gramas
      */
     public double getCalPerCem() {
         return this.calPerCem;
@@ -36,7 +36,7 @@ public class Alimentares extends Produtos{
 
     
     /** 
-     * @param calPerCem
+     * @param calPerCem [double]: definir calorias por cem gramas
      */
     public void setCalPerCem(double calPerCem) {
         this.calPerCem = calPerCem;
@@ -44,7 +44,7 @@ public class Alimentares extends Produtos{
 
     
     /** 
-     * @return double
+     * @return double : valor da percentagem de gordura
      */
     public double getFatPercent() {
         return this.fatPercent;
@@ -52,7 +52,7 @@ public class Alimentares extends Produtos{
 
     
     /** 
-     * @param fatPercent
+     * @param fatPercent [double]: definir percentagem de gordura
      */
     public void setFatPercent(double fatPercent) {
         this.fatPercent = fatPercent;

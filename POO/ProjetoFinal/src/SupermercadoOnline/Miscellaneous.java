@@ -11,9 +11,10 @@ public class Miscellaneous implements Serializable{
 
     
     /** 
-     * @param k
-     * @param state
-     * @return int
+     * Receber número inteiro de forma ocasional
+     * @param k : inteiro recebido; toma um valor recebido e é retomado
+     * @param state : true: print de uma mensagem caracterizante
+     * @return int : valor recebido de input
      */
     public int intCheck(int k, boolean state){
         Scanner sc = new Scanner(System.in);
@@ -35,8 +36,8 @@ public class Miscellaneous implements Serializable{
 
     
     /** 
-     * @param message
-     * @return int
+     * @param message : string a dar print enquanto:
+     * @return int input
      */
     public int getInt(String message){
         Scanner sc = new Scanner(System.in);

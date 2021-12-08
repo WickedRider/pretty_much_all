@@ -14,7 +14,7 @@ public class Mobiliario extends Produtos{
 
     
     /** 
-     * @return String
+     * @return String : string do produto concatenada com string caracterizante da mobilia
      */
     @Override
     public String toString() {
@@ -26,7 +26,7 @@ public class Mobiliario extends Produtos{
 
     
     /** 
-     * @return double
+     * @return double : peso da mobilia
      */
     public double getPeso() {
         return this.peso;
@@ -34,7 +34,7 @@ public class Mobiliario extends Produtos{
 
     
     /** 
-     * @param peso
+     * @param peso [double]: definir peso da mobilia
      */
     public void setPeso(double peso) {
         this.peso = peso;
@@ -42,15 +42,21 @@ public class Mobiliario extends Produtos{
 
     
     /** 
-     * @return double[]
+     * @return double[] : array com dimensao da mobilia
      */
     public double[] getDimensao() {
         return this.dimensao;
     }
 
+    /** 
+     * @param dimensao [double[]] : definir dimensao da mobilia
+     */
+    public void setDimensao(double[] dimensao) {
+        this.dimensao = dimensao;
+    }
     
     /** 
-     * @return String
+     * @return String : string com dimensao da mobilia 
      */
     private String getStringDimensao(){
         double[] hold = getDimensao();
@@ -62,11 +68,5 @@ public class Mobiliario extends Produtos{
         return dimString;
     }
     
-    /** 
-     * @param dimensao
-     */
-    public void setDimensao(double[] dimensao) {
-        this.dimensao = dimensao;
-    }
 
 }
