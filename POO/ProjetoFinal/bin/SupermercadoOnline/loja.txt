@@ -1,8 +1,6 @@
-FREQ§Cliente 1§dawfasefsefa§ahaha@tuata.com§111111111§28/11/2002
-REG§Cliente 2§fsrahgetjhrt§awfawf@aefas.pt§222222222§15/09/2001
-REG§Cliente 3§aerthedht§afgrsgr@aggrr.com§333333333§25/11/2000
-FREQ§Cliente 4§efgseg§gsjgsf@aosehnfg.com§4444444444§01/01/1990
-REG§Cliente 5§rsthjrtjh§ajgef@aaaadfc.eafa§555555555§10/02/2003
+FREQ§Cliente 1§dawfasefsefa§a@f.c§111111111§28/11/2002
+REG§Cliente 2§fsrahgetjhrt§a@f.p§222222222§15/09/2001
+
 MOB§15§10x15x20§000001§thiiiis§25.21§50
 LIMP§3§000002§rer§2.3§100
 ALIM§30§17§000003§sheesh§0.99§250
