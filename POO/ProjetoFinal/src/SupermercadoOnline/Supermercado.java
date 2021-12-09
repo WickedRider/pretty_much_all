@@ -21,10 +21,6 @@ import java.util.Scanner;
  *          take4pay3 - checked
  *          pagueMenos - checked
  *          MISSING DATES - checked
- * 
- * ALMOST FINISHED
- * only needs some perfecting and shit
- * JAVADOCS lmao
  */
 
 
