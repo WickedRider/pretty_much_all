@@ -3,7 +3,8 @@
 #
 import numpy as np
 import os
-
+import func_aux as fa
+import RLE as rl
 
 
 
@@ -15,118 +16,17 @@ RLE:
 '''
 
  
-def readText(filename):
-    alfa = "ABCDEFGHIJKLMOPQRSTUVWXYZ"
-    alfa2 = alfa.lower()
-
-    with open(filename, "r") as f:
-        text = f.read()
- 
-    str = []
-    # to ascii conversion
-    for char in text:
-        str.append(char)
-
-    return np.array(str)
-
-def ocorrencias(data: np.ndarray, alfa: np.ndarray, zeros: bool = True) -> dict:
-    """
-    Counts how many alphabet items are in data\n
-    Args:
-        data: the datastream
-        alfa: The alphabet (set of symbols)
-        zeros: whether the array has zeros or not
-
-    Returns:
-        the occurrences of each symbol of the alphabet in the datastream
-    """
-    d=data.flatten()
-
-    #if the function is called with zeros set to true the a dictionary contaioning all the items from the alfabet is created
-    if zeros:
-        ocorrencias = dict.fromkeys(alfa, 0)
-    else:
-        ocorrencias = {}
-
-    for element in d:
-        if element not in ocorrencias:
-            ocorrencias[element] = 0
-        ocorrencias[element] += 1
-
-    return ocorrencias
 
 
-def probability(p: np.ndarray, a: np.ndarray, zeros: bool = False) -> np.ndarray:
-
-    ocr=ocorrencias(p, a, zeros)
-    ocr= list(ocr.values())
-    ocr= np.array(ocr)
-    prob = ocr / p.flatten().shape[0]   #array with prob of each symbol
-
-    return prob
-
-def entropia(p: np.ndarray, a: np.ndarray) -> float:
-    """Calculates the entropy of an information source.\n   
-
-    Entropy: theoretical minimum limit for the average number of bits needed to encode a symbol.
-
-    Args:
-        p: The source of information (sound, text, image, etc.)
-        a: The alphabet (set of symbols)
-
-    Returns:
-        The entropy of the information source.
-    """
-
-    prob = probability(p, a, True)
-
-    return -np.sum(prob * np.log2(prob))
 
 
-def getAlpha(source):
-    a = []
-    for char in source:
-        if char not in a and char != ' ':
-            a.append(char)
-            
-    return a
-
-def writeEntropy(source, forAlf, string):
-    with open("entropy.txt", "a") as f:
-        f.write("Entropy of "+string+" "+str(entropia(source, getAlpha(forAlf))))
-        f.write("\n")
+# def writeEntropy(source, forAlf, string):
+#     with open("entropy.txt", "a") as f:
+#         f.write("Entropy of "+string+" "+str(entropia(source, getAlpha(forAlf))))
+#         f.write("\n")
 
 # Perform Run–length encoding (RLE) data compression algorithm on string `str`
-def RLencode(s):
- 
-    encoding = "" # stores output string
-    print(encoding)
-    i = 0
-    while i < len(s):
-        # count occurrences of character at index `i`
-        count = 1
-        if(s[i] == ' '):
-            encoding += str(count)+" "
-            i=i+1
-        
-        while i + 1 < len(s) and s[i] == s[i + 1]:
-            count = count + 1
-            i = i + 1
- 
-        # append current character and its count to the result
-        encoding += str(count) + s[i]
-        i = i + 1
 
- 
-    return encoding
-   
-def RLdecode(source):
-    toDeco = ""
-    for i in range(0, len(source), 2):
-        for n in range(int(source[i])):
-            toDeco+=source[i+1]
-        
-    return toDeco
             
 
 def main():
@@ -140,33 +40,35 @@ def main():
         for n in range(len(methods)):
             stri = filesIn[i]
             fileOut = filesOut[i]
-            sure = readText(stri)
+            sure = fa.readText(stri)
             size1 = os.path.getsize(stri)
             print(stri+":\n"+"File size: "+str(size1))
         
-            sure1 = RLencode(sure)
+            sure1 = rl.encode(sure)
         
             with open("entropy.txt", "a") as f:
                 f.write(methods[n]+"\n")
 
             with open("decoded.txt", "w") as f1:
-                f1.write(RLdecode(sure1))
+                f1.write(rl.decode(sure1))
+                
             with open(fileOut, "w") as f:
                 f.write(sure1)
             f.close()
+
             size2 = os.path.getsize(fileOut)
             print(fileOut+":\n"+"File size after compression: "+str(size2)) 
             
-            sure1 = readText(fileOut)
+            sure1 = fa.readText(fileOut)
             a = size1 / size2
             print("Compress ratio (bits at input / bits at output): "+str(a))
             
             sureNP = np.asarray(sure)
             sure1NP = np.asarray(sure1)
-            print("Entropia de "+stri+": "+str(entropia(sureNP, getAlpha(sure))))
-            writeEntropy(sureNP, getAlpha(sure), stri)
-            print("RUN_LENGTH_ENCODING: Entropia de "+fileOut+": "+str(entropia(sure1NP, getAlpha(sure1)))+"\n")
-            writeEntropy(sure1NP, getAlpha(sure1), fileOut)
+            print("Entropia de "+stri+": "+str(fa.entropia(sureNP, fa.getAlpha(sure))))
+            #writeEntropy(sureNP, fa.getAlpha(sure), stri)
+            print("RUN_LENGTH_ENCODING: Entropia de "+fileOut+": "+str(fa.entropia(sure1NP, fa.getAlpha(sure1)))+"\n")
+            #writeEntropy(sure1NP, fa.getAlpha(sure1), fileOut)
     
 if __name__ == '__main__':
     main()
