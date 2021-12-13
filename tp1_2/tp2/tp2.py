@@ -18,7 +18,7 @@ RLE:
 
 def writeEntropy(source, forAlf, string):
     with open("entropy.txt", "a") as f:
-        f.write("Entropy of "+string+" "+str(entropia(source, getAlpha(forAlf))))
+        f.write("Entropy of "+string+" "+str(fa.entropia(source, fa.getAlpha(forAlf))))
         f.write("\n")
 
 # Perform Run–length encoding (RLE) data compression algorithm on string `str`
