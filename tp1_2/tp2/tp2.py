@@ -13,7 +13,6 @@ import moveToFront as mtf
 RLE:
     random.txt : IN:96767 OUT:187842    RLE ratio: -94.1%
     
-
 '''
 
 def writeEntropy(source, forAlf, string):
