@@ -5,8 +5,9 @@ import numpy as np
 import os
 import func_aux as fa
 import RLE as rl
-
-
+import LZW as l
+import burrows_wheeler as bw
+import moveToFront as mtf
 
 '''
 RLE:
@@ -15,15 +16,10 @@ RLE:
 
 '''
 
- 
-
-
-
-
-# def writeEntropy(source, forAlf, string):
-#     with open("entropy.txt", "a") as f:
-#         f.write("Entropy of "+string+" "+str(entropia(source, getAlpha(forAlf))))
-#         f.write("\n")
+def writeEntropy(source, forAlf, string):
+    with open("entropy.txt", "a") as f:
+        f.write("Entropy of "+string+" "+str(entropia(source, getAlpha(forAlf))))
+        f.write("\n")
 
 # Perform Run–length encoding (RLE) data compression algorithm on string `str`
 
