@@ -1,17 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import re
 
 def readText(filename):
     with open(filename, "r") as f:
         text = f.read()
  
-    str = []
+    stra = []
     # to ascii conversion
     for char in text:
-        str.append(char)
-
-    return np.array(str)
+        stra.append(char)
+    shs = ""
+    return shs.join(stra)
 
 def ocorrencias(data: np.ndarray, alfa: np.ndarray, zeros: bool = True) -> dict:
     """

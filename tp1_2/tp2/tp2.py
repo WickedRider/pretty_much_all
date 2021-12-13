@@ -11,7 +11,7 @@ import moveToFront as mtf
 
 '''
 RLE:
-    random.txt : IN:96767 OUT:187842    RLE ratio: -94.1%
+
     
 '''
 
@@ -30,7 +30,7 @@ def main():
     filesIn = ["dataset/bible.txt", "dataset/finance.csv", "dataset/jquery-3.6.0.js", "dataset/random.txt"]
     filesOut = ["dataset/bible1.txt", "dataset/finance1.csv", "dataset/jquery-3.6.0.1.js", "dataset/random1.txt"]
 
-    methods = ["RUN_LENGTH_ENCODING", "LZW"]
+    methods = ["RUN_LENGTH_ENCODING"]
     for i in range(1):
         for n in range(len(methods)):
             stri = filesIn[i]
@@ -39,29 +39,36 @@ def main():
             size1 = os.path.getsize(stri)
             print(stri+":\n"+"File size: "+str(size1))
         
-            sure1 = rl.encode(sure)
-        
+            sure1 = mtf.encodeM(sure)
+            
             with open("entropy.txt", "a") as f:
                 f.write(methods[n]+"\n")
-
-            with open("decoded.txt", "w") as f1:
-                f1.write(rl.decode(sure1))
-                
+            f.close()
+            
+            # with open("decoded.txt", "w") as f1:
+            #     f1.write(rl.decode(sure1))
+            # f1.close()
+            s=""
+            for i in sure1:
+                s+=str(i)
             with open(fileOut, "w") as f:
-                f.write(sure1)
+                f.write(s)
             f.close()
 
             size2 = os.path.getsize(fileOut)
             print(fileOut+":\n"+"File size after compression: "+str(size2)) 
             
             sure1 = fa.readText(fileOut)
+            
             a = size2 / size1
             print("Compress ratio (bits at input / bits at output): "+str(a))
             
             sureNP = np.asarray(sure)
             sure1NP = np.asarray(sure1)
             print("Entropia de "+stri+": "+str(fa.entropia(sureNP, fa.getAlpha(sure))))
+            
             writeEntropy(sureNP, fa.getAlpha(sure), stri)
+            
             print("RUN_LENGTH_ENCODING: Entropia de "+fileOut+": "+str(fa.entropia(sure1NP, fa.getAlpha(sure1)))+"\n")
             writeEntropy(sure1NP, fa.getAlpha(sure1), fileOut)
     
