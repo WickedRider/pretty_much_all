@@ -30,7 +30,7 @@ def main():
     filesIn = ["dataset/bible.txt", "dataset/finance.csv", "dataset/jquery-3.6.0.js", "dataset/random.txt"]
     filesOut = ["dataset/bible1.txt", "dataset/finance1.csv", "dataset/jquery-3.6.0.1.js", "dataset/random1.txt"]
 
-    methods = ["RUN_LENGTH_ENCODING"]
+    methods = ["RUN_LENGTH_ENCODING", "LZW"]
     for i in range(1):
         for n in range(len(methods)):
             stri = filesIn[i]
@@ -55,15 +55,31 @@ def main():
             print(fileOut+":\n"+"File size after compression: "+str(size2)) 
             
             sure1 = fa.readText(fileOut)
-            a = size1 / size2
+            a = size2 / size1
             print("Compress ratio (bits at input / bits at output): "+str(a))
             
             sureNP = np.asarray(sure)
             sure1NP = np.asarray(sure1)
             print("Entropia de "+stri+": "+str(fa.entropia(sureNP, fa.getAlpha(sure))))
-            #writeEntropy(sureNP, fa.getAlpha(sure), stri)
+            writeEntropy(sureNP, fa.getAlpha(sure), stri)
             print("RUN_LENGTH_ENCODING: Entropia de "+fileOut+": "+str(fa.entropia(sure1NP, fa.getAlpha(sure1)))+"\n")
-            #writeEntropy(sure1NP, fa.getAlpha(sure1), fileOut)
+            writeEntropy(sure1NP, fa.getAlpha(sure1), fileOut)
     
 if __name__ == '__main__':
     main()
+    
+    
+#METHODS JUNCTION:
+"""
+RLE
+LZW
+BURROWS
+MTF
+HUFFMAN
+
+BURROWS+RLE
+BURROWS+LZW
+BURROWS+MTF
+
+
+"""
