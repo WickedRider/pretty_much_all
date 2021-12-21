@@ -8,7 +8,7 @@ import RLE as rl
 import LZW as l
 import burrows_wheeler as bw
 import moveToFront as mtf
-
+import huffman as hf
 '''
 RLE:
 
@@ -33,45 +33,34 @@ def main():
     methods = ["RUN_LENGTH_ENCODING"]
     for i in range(1):
         for n in range(len(methods)):
-            stri = filesIn[i]
-            fileOut = filesOut[i]
-            sure = fa.readText(stri)
-            size1 = os.path.getsize(stri)
-            print(stri+":\n"+"File size: "+str(size1))
-        
-            sure1 = mtf.encodeM(sure)
-            
-            with open("entropy.txt", "a") as f:
-                f.write(methods[n]+"\n")
-            f.close()
-            
-            # with open("decoded.txt", "w") as f1:
-            #     f1.write(rl.decode(sure1))
-            # f1.close()
-            s=""
-            for i in sure1:
-                s+=str(i)
-            with open(fileOut, "w") as f:
-                f.write(s)
-            f.close()
+            fInput = filesIn[i]
+            fOutput = filesOut[i]
+            input = fa.readText(fInput)
 
-            size2 = os.path.getsize(fileOut)
-            print(fileOut+":\n"+"File size after compression: "+str(size2)) 
+            inString = fa.readText(fInput)
+            asArrayIn = np.array(list(inString))
+
+            hold = hf.Huffman_Enconding(inString)
+            s = hold[0]
+            asArrayOut = np.array(list(s))
+            tree = hold[1]
+            with open(fOutput, "w") as f:
+                f.write(s)
             
-            sure1 = fa.readText(fileOut)
+            print(fa.entropia(asArrayIn, fa.getAlpha(asArrayIn)))
+            print(fa.entropia(asArrayOut, fa.getAlpha(asArrayOut)))
+
+            decoded = hf.Huffman_Decoding(s, tree)
+            asArrayDecoded = np.array(list(decoded))
+
+            with open("decoded.txt", "w") as f1:
+                f1.write(decoded)
+
+            print(fa.entropia(asArrayDecoded, fa.getAlpha(asArrayDecoded)))
+
             
-            a = size2 / size1
-            print("Compress ratio (bits at input / bits at output): "+str(a))
-            
-            sureNP = np.asarray(sure)
-            sure1NP = np.asarray(sure1)
-            print("Entropia de "+stri+": "+str(fa.entropia(sureNP, fa.getAlpha(sure))))
-            
-            writeEntropy(sureNP, fa.getAlpha(sure), stri)
-            
-            print("RUN_LENGTH_ENCODING: Entropia de "+fileOut+": "+str(fa.entropia(sure1NP, fa.getAlpha(sure1)))+"\n")
-            writeEntropy(sure1NP, fa.getAlpha(sure1), fileOut)
-    
+
+
 if __name__ == '__main__':
     main()
     

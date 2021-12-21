@@ -1,3 +1,0 @@
-RUN_LENGTH_ENCODING
-Entropy of dataset/bible.txt nan
-Entropy of dataset/bible1.txt nan

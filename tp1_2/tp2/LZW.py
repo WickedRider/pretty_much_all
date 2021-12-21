@@ -59,8 +59,3 @@ def decompress(compressed):
     return result.getvalue()
 
 
-# How to use:
-compressed = compress('mississippi')
-print(compressed)
-decompressed = decompress(compressed)
-print(decompressed)

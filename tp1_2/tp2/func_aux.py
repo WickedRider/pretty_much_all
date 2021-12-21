@@ -5,7 +5,7 @@ import re
 def readText(filename):
     with open(filename, "r") as f:
         text = f.read()
- 
+
     stra = []
     # to ascii conversion
     for char in text:
@@ -48,6 +48,11 @@ def probability(p: np.ndarray, a: np.ndarray, zeros: bool = False) -> np.ndarray
     prob = ocr / p.flatten().shape[0]   #array with prob of each symbol
 
     return prob
+
+
+
+
+
 
 def entropia(p: np.ndarray, a: np.ndarray) -> float:
     """Calculates the entropy of an information source.\n   
