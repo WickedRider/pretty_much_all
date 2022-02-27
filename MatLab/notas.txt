@@ -1,0 +1,62 @@
+x = 5 ; size(x) 	: 1 1  -> a 1 by 1 matrix
+
+; 			after a line to suppress the output
+
+' 			-> transpose matrix
+
+; 			while defining a matrix, to define lines
+
+M = matrix
+
+x = 0:10 		creates a matrix with one line, and ints from 0 to 10
+
+M(row,:)  ; 		: calls all columns of [row]
+M(:;column)   ; 	: calls all rows of [column]
+
+M(2:3, 2:3)   ; 	returns the second and third row, and the second at the second and third column
+
+M.*A   ; 		Multiplies each value in M by the corresponding value on A, M(1,1) * A(1,1)
+M./A
+
+x=[ 1 2 3 ]
+y=[ 4 5 6 ]
+x*y'    ; 		Internal product, can be done with function dot(x,y)
+
+x'*y	; 		Outer product, no function available
+
+cross(x,y)    ; 	cross multiplication
+
+-----Built in functions-----
+
+sin , cos , tan
+exp    ; 		exponential
+log
+sqrt
+			if pi is used as variable, it loses its original value. How to clear: go to workspace
+i
+^			for exponents
+
+zeros(rows, columns)
+ones(rows, columns)
+
+			function name has to be the same as file name
+
+% 			for line comment
+
+x = 0:10
+function(x)		prints all return values for each value of x (0 through 10)
+
+only use [ ] for output arguments, if more than 1 variable
+
+~0 = 1
+~1 = 0
+
+-----Solving linear equations-----
+
+b = [ 1 -2 0 ]'
+A\b
+
+-----Determinant of a matrix-----
+det(A)
+
+-----For Loops-----
